@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <script>
+      ///fucntion to say hello
+      function hello1() {
+        alert('Hello world!');
+      }
+
+      ///fucntion to change h1 from hello world to goodbye.
+
+
+      function hello2() {
+        document.querySelector('h1').innerHTML = 'Goobye!';
+      }
+
+      ///fucntion to increase counter
+      let counter1 = 0;
+      function count1() {
+        counter1++;
+        document.querySelector('#counter1').innerHTML = counter1;
+      }
+
+      ///counter1.html
+
+      let counter2 = 0;
+
+      function count2() {
+        counter2++;
+        document.querySelector('#counter2').innerHTML = counter2;
+
+        if (counter2 % 10 === 0) {
+          alert(`Counter is at ${counter2}!`);
+        }
+      }
+
+/// counter 2
+
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('button').onclick = count;
+      });
+
+      let counter = 0;
+
+      function count() {
+        counter++;
+        document.querySelector('#counter').innerHTML = counter;
+
+        if (counter % 10 === 0) {
+          alert(`Counter is at ${counter}!`);
+        }
+      }
+
+
+    </script>
+    <title>Lecutrenotes</title>
+  </head>
+  <body>
+
+
+
+<!-- from count 2 -->
+
+<h1 id="counter">0</h1>
+<button>Click Here3 </button>
+
+
+<!-- from count 1 -->
+<h1 id="counter2">0</h1>
+<button  onclick="count2()">Click here2</button>
+
+
+<!-- from count 0 -->
+
+  <h1 id="counter1">0</h1>
+  <button type="button" name="button" onclick="count1()">Click Here!</button>
+
+
+<!-- from hello 1 and 2 -->
+    <h1>Hello world!</h1>
+    <button type="button" name="button" onclick="hello1()">Click Here!</button>
+
+    <button type="button" name="button" onclick="hello2()">Click Here! </button>
+
+  </body>
+</html>
