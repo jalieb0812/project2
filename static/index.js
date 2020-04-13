@@ -13,28 +13,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.querySelector('#messaging').onsubmit = () => {
         const message = document.querySelector("#message").value
-        socket.emit("submit message", {"message": message})
-      //  message.value= ''
-          return false;
+        socket.emit("submit message", {"message": message, "username": username})
+        message.value = ''
+        return false;
       };
         });
 
 
     socket.on('send message', data => {
       const li = document.createElement('li');
-      const message = document.querySelector("#message").value
-      li.innerHTML = `message is: ${message}`;
+      document.querySelector("#newmessage").innerHTML= `newest message ${data.message}`
+      li.innerHTML = ` ${data.username}:  ${data.message}`;
       document.querySelector('#messages').append(li);
-
-      document.querySelector('#')
+      message = document.querySelector("#message").value= ''
       return false;
-
 
       });
-      return false;
+
         });
-
-
 
 
 
@@ -71,7 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //send request
     request.send(data);
-    return false;
+    document.querySelector('#username').innerHTML= ''
+    //return false;
   };
 });
 

@@ -52,9 +52,9 @@ background-color:yellow;
 <h4 id="welcometext" style="color:white"></h4>
 
 <div  style="justify-content: center">
-  <form id="users"  style = text-center>
+  <form id="users"  style = text-center action="/" method="post">
     <input  id="username" type="text" autocomplete="off" autofocus placeholder="username"  required>
-  <input type="submit" name="username" value="submit">
+  <button type="submit" name="button">sign in</button>
   </form>
 
 </div>
@@ -125,7 +125,7 @@ background-color:yellow;
 <ul id="messages">
 {% for message in messages %}
 <li>
-message from: ; message:  {{message}}
+ {{message}}
 </li>
 
 {% endfor %}

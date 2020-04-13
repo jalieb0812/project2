@@ -26,8 +26,8 @@ def after_request(response):
 
 # Configure session to use filesystem (instead of signed cookies)
 #app.config["SESSION_FILE_DIR"] = mkdtemp()
-#app.config["SESSION_PERMANENT"] = False
-#app.config["SESSION_TYPE"] = "filesystem"
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
 app.config['DEBUG'] = True
 app.config["SECRET_KEY"]= os.getenv("SECRET_KEY")
 
@@ -59,15 +59,15 @@ def index():
 @socketio.on("submit message")
 def message(data):
 
-    message = data
-    print(f"this is the: {message}")
-    messages.append(message)
+    message = data["message"]
+    print(f"this is the the message: {message}")
+    messages.append( session["username"] + ": " +  message )
     #messagedict = {"message": message, "username": session["username"]}
     #messagedict["message"] = message
     #messagedict["user_name"]= session["username"]
 
     #messages["message"].append(messagedict["message"])
-    emit("send message",  messages, broadcast=True)
+    emit("send message",  {'username': session["username"], 'message': message },  broadcast=True)
 
 
 @app.route("/username", methods=["GET", "POST"])
@@ -75,7 +75,7 @@ def user():
 
     username = request.form.get("username")
 
-    #session["username"]=username
+    session["username"]=username
 
     users.append(username)
 
@@ -83,7 +83,7 @@ def user():
     if not username:
         return jsonify({"success": False})
 
-    return jsonify({"success": True, "username": username})
+    return render_template("index.html")
 
 if __name__ == '__main__':
     socketio.run(app)
