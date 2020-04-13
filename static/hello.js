@@ -2,6 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  //setInterval(count, 1000); maybe do somethign like this.
+
   document.querySelector('#users').onsubmit = () => {
 
     //initilize new request
@@ -31,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //send request
     request.send(data);
-    return false;
+    document.querySelector('#username').innerHTML= ''
+  //  return false;
   };
 });

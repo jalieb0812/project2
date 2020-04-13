@@ -46,12 +46,15 @@ messages=[]
 
 
 
-
-@app.route("/")
-@app.route("/index.html")
+@app.route("/", methods=["GET", "POST"])
+@app.route("/index.html", methods=["GET", "POST"])
 def index():
 
-    return render_template("index.html", users=users, messages=messages)
+
+    print(f"this is the chanels {chanels}")
+    print(f"this is the users: {users}")
+
+    return render_template("index.html", users=users, messages=messages, chanels=chanels)
 
 
 
@@ -67,7 +70,7 @@ def message(data):
     #messagedict["user_name"]= session["username"]
 
     #messages["message"].append(messagedict["message"])
-    emit("send message",  {'username': session["username"], 'message': message },  broadcast=True)
+    emit("send message",  {'username': session["username"], 'message': message, 'chanel': session['chanel'] },  broadcast=True)
 
 
 @app.route("/username", methods=["GET", "POST"])
@@ -84,6 +87,29 @@ def user():
         return jsonify({"success": False})
 
     return render_template("index.html")
+
+@app.route("/createchanel", methods=["GET", "POST"])
+def addchanel():
+
+    new_chanel = request.form.get("newchanel")
+
+    session["chanel"]=new_chanel
+
+    chanels.append(new_chanel)
+
+
+    return redirect("index.html")
+
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
+
 
 if __name__ == '__main__':
     socketio.run(app)
