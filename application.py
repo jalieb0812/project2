@@ -47,16 +47,19 @@ messages=[]
 
 
 @app.route("/", methods=["GET", "POST"])
-@app.route("/index.html", methods=["GET", "POST"])
 def index():
 
+    #new_chanel = request.form.get("newchanel")
+
+    #session["chanel"]=new_chanel
+    #print (f" chanel in index is {new_chanel}")
+
+    #chanels.append(new_chanel)
 
     print(f"this is the chanels {chanels}")
     print(f"this is the users: {users}")
 
     return render_template("index.html", users=users, messages=messages, chanels=chanels)
-
-
 
 
 @socketio.on("submit message")
@@ -70,35 +73,44 @@ def message(data):
     #messagedict["user_name"]= session["username"]
 
     #messages["message"].append(messagedict["message"])
-    emit("send message",  {'username': session["username"], 'message': message, 'chanel': session['chanel'] },  broadcast=True)
+    emit("send message",  {'username': session["username"], 'message': message },  broadcast=True)
 
 
-@app.route("/username", methods=["GET", "POST"])
+@app.route("/username", methods=["POST"])
 def user():
 
     username = request.form.get("username")
 
+    print (f" username in username is {username}")
     session["username"]=username
 
     users.append(username)
-
 
     if not username:
         return jsonify({"success": False})
 
     return render_template("index.html")
 
-@app.route("/createchanel", methods=["GET", "POST"])
-def addchanel():
+@app.route("/createchanel", methods=["POST"])
+def createchanel():
 
-    new_chanel = request.form.get("newchanel")
+
+    new_chanel = request.form.get('new_chanel')
+
+
+    if not new_chanel:
+        return jsonify({"success": False})
 
     session["chanel"]=new_chanel
 
+    print (f"chanel is {new_chanel}")
+
     chanels.append(new_chanel)
 
+    return jsonify({"success": True, "new_chanel": new_chanel})
 
-    return redirect("index.html")
+
+
 
 @app.route("/logout")
 def logout():

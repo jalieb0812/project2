@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   //default submit is disabled
   document.querySelector('#chanelsubmit').disabled = true;
   //enable chanel submit oly if text in the field
-   document.querySelector('#newchanel').onkeyup = () => {
+   document.querySelector('#new_chanel').onkeyup = () => {
 
-    if (document.querySelector('#newchanel').value.length > 0)
+   if (document.querySelector('#new_chanel').value.length > 0)
         document.querySelector('#chanelsubmit').disabled = false;
     else
         document.querySelector('#chanelsubmit').disabled = true;
@@ -14,35 +14,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ///code for adding a chanel
 
-
   document.querySelector('#addchanel').onsubmit = ()=> {
     //initilize new request
     const request = new XMLHttpRequest();
-    const chanel =  document.querySelector('#newchanel').value;
-  //  const new_chanel_name = document.querySelector('#newchanel').value;
-    request.open('GET', '/createchanel');
 
-    //callback function for when request completes
-    //request.onload = ()=> {
+    const li = document.createElement('li');
 
-    //add new chanel
-    //chanel.innerHTML = new_chanel_name;
-  //  document.querySelector('#chanels').append(chanel);
+    const new_chanel = document.querySelector('#new_chanel').value;
 
 
-//  }
 
-    //add data to send with requests
-    const data = new FormData();
-    data.append('chanel', chanel)
+    request.open('POST', '/createchanel');
+    //send \
 
-    //send requests
-    request.send(data);
+
+    request.onload = () => {
+
+    const data =  JSON.parse(request.responseText);
+
+    if (data.success) {
+      const contents = `chanel is ${data['new_chanel']}`;
+
+      document.querySelector('#chanel').innerHTML = contents;
+
+      li.innerHTML = contents;
+
+      document.querySelector('#chanels').append(li);
+    }
+    else {
+        document.querySelector('#chanel').innerHTML = "there was an error";
+        li.innerHTML = "opps there was an error";
+        document.querySelector('#chanels').append(li);
+
+    }
+ }
+
+   const data = new FormData();
+
+   data.append('new_chanel', new_chanel);
+   request.send(data);
+
+  //document.querySelector('#cnelsubmit').disabled = true;
+   document.querySelector('#new_chanel').value = '';
     ///clear the form
-  //  document.querySelector('#newchanel').value = '';
+  //
     /// set chanel subit back to disabled
-    document.querySelector('#chanelsubmit').disabled = true;
 
-//   return false;
   };
+
 });

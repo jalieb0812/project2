@@ -51,7 +51,6 @@ textarea {
 
 <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 <script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
-<script src="{{url_for('static', filename = 'hello.js')}}"> </script>
 
 
 
@@ -72,21 +71,31 @@ textarea {
 
    <div class="p-2 bg-info">
 
-     <form id="addchanel" action="chanels.html" method="post" style = text-center>
+     <form id="addchanel" action="/chanels" method="post" style = text-center>
        <input  id="newchanel" type="text" autocomplete="off" autofocus placeholder="chanel">
       <button type="submit" id="chanelsubmit" name="button"> create chanel</button>
      </form>
 
      <div  id="slackchanels">
-       <ul >
+
+        <a  href="{{ url_for('index') }} ">
+          <div id="chanel">
+
+     </div>
+        <ul id ="chanels" >
+          <li>
          {% for chanel in chanels %}
-            <li>
-               {{ chanel }}
-             </li>
+
+                {{ chanel }}
+        </li>
+
              {% else %}
            <li>No chanels</li>
           {% endfor %}
+
        </ul>
+        </a>
+
      </div>
     </div>
 
@@ -121,9 +130,9 @@ textarea {
 </div>
 
 <div class="container">
-  <form id="messaging" action="/" >
+  <form id="messaging" action="/chanels" >
     <input id="message" autocomplete="off" type="text" placeholder="message" required>
-  <button id="messagesubmit" type="reset"  class="btn btn-primary">Submit</button>
+  <button id="messagesubmit" type="submit"  class="btn btn-primary">Submit</button>
 
   </form>
 

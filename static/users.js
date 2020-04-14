@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     request.open('POST', '/username');
 
     //callback function for whn request completes
-    request.onload = () => {
+    request.onsubmit = () => {
 
       //extract json database
       //const data = JSON.parse(request.responseText);
@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //add data to send with requests
-    const data = new FormData();
-    data.append('username', username)
+      const data = new FormData();
+      data.append('username', username)
 
     //send request
     request.send(data);

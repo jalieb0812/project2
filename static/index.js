@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.querySelector('#messaging').onsubmit = () => {
         const message = document.querySelector("#message").value
-        socket.emit("submit message", {"message": message, "username": username, "chanel": chanel})
+        socket.emit("submit message", {"message": message, })
         message.value = ''
         return false;
       };
