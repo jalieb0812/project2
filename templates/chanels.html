@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Chanles
+    chanels
 {% endblock %}
 
 {% block main %}
@@ -72,32 +72,33 @@ textarea {
    <div class="p-2 bg-info">
 
      <form id="addchanel" action="/chanels" method="post" style = text-center>
-       <input  id="newchanel" type="text" autocomplete="off" autofocus placeholder="chanel">
+       <input  id="new_chanel" type="text" autocomplete="off" autofocus placeholder="chanel">
       <button type="submit" id="chanelsubmit" name="button"> create chanel</button>
      </form>
 
      <div  id="slackchanels">
 
-        <a  href="{{ url_for('index') }} ">
-          <div id="chanel">
+       <ul id="nav">
+             <li><a href="" class= "nav-link" id="chanel" data-page="chanels"></a></li>
+       </ul>
 
-     </div>
-        <ul id ="chanels" >
-          <li>
-         {% for chanel in chanels %}
 
-                {{ chanel }}
-        </li>
+       <ul id ="chanels" >
+          {% for chanel in chanels_list %}
+             <li>
+               <a  href="{{ url_for('createchanel') }} ">
+                   {{ chanel }}
+               </a>
+            </li>
 
-             {% else %}
-           <li>No chanels</li>
-          {% endfor %}
+              {% else %}
+            <li>No chanels</li>
+             {% endfor %}
 
        </ul>
-        </a>
 
-     </div>
-    </div>
+       </div>
+           </div>
 
 
 <div class="col-8 justify-content-center">
@@ -129,6 +130,8 @@ textarea {
    </div>
 </div>
 
+  <div id="messagespage"> </div>
+
 <div class="container">
   <form id="messaging" action="/chanels" >
     <input id="message" autocomplete="off" type="text" placeholder="message" required>
@@ -141,7 +144,7 @@ textarea {
 <li id="newmessage"> </li>
 
 <textarea id="messages" name="chatroom" rows="8" cols="80" style ="justify-content: center" readonly>
-{% for message in messages %}
+{% for message in messages_list %}
      {{message}}
   {% endfor %}
 </textarea>

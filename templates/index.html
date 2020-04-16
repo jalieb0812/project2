@@ -45,15 +45,30 @@ textarea {
     border: 2px solid #ccc;
     border-radius: 4px;
     background-color: #f8f8f8;
-    resize: none;
+    width: 100%;
+
   }
+
+  #message{
+
+    hight: 100%;
+    width: 100%;
+  }
+
+input[type=submit]{
+    float: center;
+}
+
+
+
 </style>
+
+
 
 <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
 <script src="{{url_for('static', filename = 'users.js')}}"> </script>
 
-<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
 
 
 
@@ -89,16 +104,15 @@ textarea {
 
 
   <ul id="nav">
-        <li<a href="" class= "nav-link" data-page="chanelsroom" id="chanel" </a></li>
+        <li><a href="{{ url_for('chanels') }}" class="nav-link" id="chanel" data-page="chanels"></a></li>
   </ul>
 
 
 <ul id ="chanels" >
-   {% for chanel in chanels %}
+   {% for chanel in chanels_list %}
       <li>
-        <a  href="{{ url_for('createchanel') }} ">
-            {{ chanel }}
-        </a>
+        <a  href="{{ url_for('chanels') }}" class="nav-link" id="chanel" data-page="chanels">
+            {{ chanel }}        </a>
      </li>
 
        {% else %}
@@ -120,30 +134,34 @@ textarea {
 
 
   <div class="container">
-     <form id="messaging" >
-        <input id="message" autocomplete="off" type="text" placeholder="message" required>
-       <button id="messagesubmit" type="submit"  class="btn btn-primary">Submit</button>
-    </form>
-
- <hr>
-
-  <li id="newmessage"> </li>
 
 
-  <div id="messagespage">
 
 
-   <textarea id="messages" name="chatroom" rows="25" cols="80" style ="justify-content: center" readonly>
-      {% for message in messages %}
+  <li id="newmessage"> Latest message: </li>
+
+
+
+<div class="form-group row" >
+   <textarea id="messages" class="form-control" name="chatroom" rows="10" width=100% flex style ="justify-content: center" readonly>
+      {% for message in messages_list %}
           {{message}}
        {% endfor %}
     </textarea>
+ </div>
 
-    </div>
+    <hr>
+
+<form id="messaging" >
+    <div class="form-group row" >
+     <textarea id="message"  class="form-control" autocomplete="off" type="text" placeholder="message" required></textarea>
+  </div>
+    <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
+</form>
+
    </div>
   </div>
-  </div>
-
+</div>
 
 
  <div class="p-2 bg-primary">

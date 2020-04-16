@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.querySelector('#messaging').onsubmit = () => {
         const message = document.querySelector("#message").value
-        socket.emit("submit message", {"message": message, })
+        const timestamp = Math.floor(Date.now() / 1000)
+        socket.emit("submit message", { 'timestamp': timestamp, 'username': username, "message": message })
         message.value = ''
         return false;
       };
@@ -22,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     socket.on('send message', data => {
       //const row = document.createElement('row');
-      document.querySelector("#newmessage").innerHTML= `newest message ${data.message}`
-      const row = ` ${data.username}:  ${data.message}`;
+      document.querySelector("#newmessage").innerHTML= `${data.timestamp}: ${data.username}: ${data.message}`
+      const row = `${data.timestamp}: ${data.username}:  ${data.message}`;
       document.querySelector('#messages').value += row + '\n';
       message = document.querySelector("#message").value= ''
       //return false;

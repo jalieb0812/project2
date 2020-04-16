@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       //else {
         //document.querySelector('#userwelcome').innerHTML = 'oops. error. something went wrong'
       //}
-    
+
     }
 
     //add data to send with requests
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //send request
     request.send(data);
-    return false;
+    //return false;
     document.querySelector('#username').innerHTML= ''
 
   };

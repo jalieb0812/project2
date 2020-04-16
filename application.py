@@ -1,5 +1,6 @@
 import os
 import requests
+import datetime
 from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
 from flask_session import Session
 from flask_socketio import SocketIO, emit
@@ -39,10 +40,10 @@ Session(app)
 users=[]
 
 """ chanels list """
-chanels=[]
+chanels_list=[]
 
 """ messages """
-messages=[]
+messages_list=[]
 
 
 
@@ -56,16 +57,22 @@ def index():
 
     #chanels.append(new_chanel)
 
-    print(f"this is the chanels {chanels}")
+    print(f"this is the chanels {chanels_list}")
     print(f"this is the users: {users}")
+    print(f"these are the messages: {messages_list}")
 
-    return render_template("index.html", users=users, messages=messages, chanels=chanels)
+    return render_template("index.html", users=users, messages_list=messages_list, chanels_list=chanels_list)
 
 
 @app.route("/chanels", methods=["GET", "POST"])
-def chanelsroom():
+def chanels():
 
-    return render_template("chanels.html", users=users, messages=messages, chanels=chanels)
+    if request.method == "GET":
+
+        return render_template("chanels.html", users=users, messages_list=messages_list, chanels_list=chanels_list)
+
+    if request.method == "POST":
+        redirect(url_for('/'))
 
 
 @socketio.on("submit message")
@@ -73,13 +80,23 @@ def message(data):
 
     message = data["message"]
     print(f"this is the the message: {message}")
-    messages.append( session["username"] + ": " +  message )
+    timestamp = datetime.datetime.now().strftime("Date: %Y-%m-%d Time: %H:%M:%S")
+    messages_list.append( timestamp + ": " + session["username"] + ": " +  message )
     #messagedict = {"message": message, "username": session["username"]}
     #messagedict["message"] = message
     #messagedict["user_name"]= session["username"]
 
     #messages["message"].append(messagedict["message"])
-    emit("send message",  {'username': session["username"], 'message': message },  broadcast=True)
+    emit("send message",  { 'timestamp': timestamp, 'username': session["username"], 'message': message },  broadcast=True)
+
+
+""" route for sending the stored messages """
+@app.route("/messages", methods=["GET", "POST"])
+def messages():
+
+    return messages_list
+
+
 
 
 @app.route("/username", methods=["POST"])
@@ -95,7 +112,7 @@ def user():
     if not username:
         return jsonify({"success": False})
 
-    return render_template("index.html")
+    return jsonify({"success": True})
 
 @app.route("/createchanel", methods=["POST"])
 def createchanel():
@@ -111,7 +128,7 @@ def createchanel():
 
     print (f"chanel is {new_chanel}")
 
-    chanels.append(new_chanel)
+    chanels_list.append(new_chanel)
 
     return jsonify({"success": True, "new_chanel": new_chanel})
 
