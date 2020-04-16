@@ -53,9 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
    data.append('new_chanel', new_chanel);
    request.send(data);
+   document.querySelector('#new_chanel').value = '';
+   return false
 
   //document.querySelector('#cnelsubmit').disabled = true;
-   document.querySelector('#new_chanel').value = '';
+
     ///clear the form
   //
     /// set chanel subit back to disabled

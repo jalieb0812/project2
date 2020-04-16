@@ -62,6 +62,12 @@ def index():
     return render_template("index.html", users=users, messages=messages, chanels=chanels)
 
 
+@app.route("/chanels", methods=["GET", "POST"])
+def chanelsroom():
+
+    return render_template("chanels.html", users=users, messages=messages, chanels=chanels)
+
+
 @socketio.on("submit message")
 def message(data):
 

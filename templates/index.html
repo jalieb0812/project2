@@ -85,28 +85,29 @@ textarea {
        </form>
      </div>
 
-  <div  id="slackchanels">
+<div  id="slackchanels">
 
 
-          <div id="chanel">
-
-     </div>
-        <ul id ="chanels" >
-             {% for chanel in chanels %}
-          <li>
-            <a  href="{{ url_for('createchanel') }} ">
-                {{ chanel }}
-            </a>
-        </li>
-
-             {% else %}
-           <li>No chanels</li>
-          {% endfor %}
-
-       </ul>
+  <ul id="nav">
+        <li<a href="" class= "nav-link" data-page="chanelsroom" id="chanel" </a></li>
+  </ul>
 
 
-     </div>
+<ul id ="chanels" >
+   {% for chanel in chanels %}
+      <li>
+        <a  href="{{ url_for('createchanel') }} ">
+            {{ chanel }}
+        </a>
+     </li>
+
+       {% else %}
+     <li>No chanels</li>
+      {% endfor %}
+
+</ul>
+
+</div>
     </div>
 
 
@@ -118,35 +119,38 @@ textarea {
          <h3 id="userwelcome"></h3>
 
 
-         <div class="container">
-           <form id="messaging" >
-             <input id="message" autocomplete="off" type="text" placeholder="message" required>
-           <button id="messagesubmit" type="submit"  class="btn btn-primary">Submit</button>
+  <div class="container">
+     <form id="messaging" >
+        <input id="message" autocomplete="off" type="text" placeholder="message" required>
+       <button id="messagesubmit" type="submit"  class="btn btn-primary">Submit</button>
+    </form>
 
-           </form>
+ <hr>
 
-         <hr>
-
-         <li id="newmessage"> </li>
-
-         <textarea id="messages" name="chatroom" rows="25" cols="80" style ="justify-content: center" readonly>
-         {% for message in messages %}
-              {{message}}
-           {% endfor %}
-         </textarea>
-
-          </div>
+  <li id="newmessage"> </li>
 
 
+  <div id="messagespage">
+
+
+   <textarea id="messages" name="chatroom" rows="25" cols="80" style ="justify-content: center" readonly>
+      {% for message in messages %}
+          {{message}}
+       {% endfor %}
+    </textarea>
+
+    </div>
    </div>
- </div>
+  </div>
+  </div>
+
+
 
  <div class="p-2 bg-primary">
    <div  id="namespace" style ="justify-content: center">
      <h6>users</h6>
 
      <ul>
-
     {% for user in users %}
           <li>
                {{ user }}
@@ -159,7 +163,7 @@ textarea {
       </div>
      </div>
    </div>
-</div>
+  </div>
 
 
 
