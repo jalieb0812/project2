@@ -144,7 +144,7 @@ textarea {
 <li id="newmessage"> </li>
 
 <textarea id="messages" name="chatroom" rows="8" cols="80" style ="justify-content: center" readonly>
-{% for message in messages_list %}
+{% for message in messages_dict %}
      {{message}}
   {% endfor %}
 </textarea>

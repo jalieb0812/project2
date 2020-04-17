@@ -43,7 +43,7 @@ users=[]
 chanels_list=[]
 
 """ messages """
-messages_list=[]
+messages_dict=dict()
 
 
 
@@ -59,9 +59,9 @@ def index():
 
     print(f"this is the chanels {chanels_list}")
     print(f"this is the users: {users}")
-    print(f"these are the messages: {messages_list}")
+    print(f"these are the messages: {messages_dict}")
 
-    return render_template("index.html", users=users, messages_list=messages_list, chanels_list=chanels_list)
+    return render_template("index.html", users=users, messages_dict=messages_dict, chanels_list=chanels_list)
 
 
 @app.route("/chanels", methods=["GET", "POST"])
@@ -69,7 +69,7 @@ def chanels():
 
     if request.method == "GET":
 
-        return render_template("chanels.html", users=users, messages_list=messages_list, chanels_list=chanels_list)
+        return render_template("chanels.html", users=users, messages_dict=messages_dict, chanels_list=chanels_list)
 
     if request.method == "POST":
         redirect(url_for('/'))
@@ -79,9 +79,20 @@ def chanels():
 def message(data):
 
     message = data["message"]
-    print(f"this is the the message: {message}")
+
+    print(f"this is the  message: {message}")
+
     timestamp = datetime.datetime.now().strftime("Date: %Y-%m-%d Time: %H:%M:%S")
-    messages_list.append( timestamp + ": " + session["username"] + ": " +  message )
+
+
+
+    chanel= chanels_list[len(chanels_list) - 1]
+
+    print(f"this is the chanel in submit message: {chanel}")
+
+
+    messages_dict["new_chanel"].append( timestamp + ": " + session["username"] + ": " +  message )
+
     #messagedict = {"message": message, "username": session["username"]}
     #messagedict["message"] = message
     #messagedict["user_name"]= session["username"]
@@ -91,28 +102,32 @@ def message(data):
 
 
 """ route for sending the stored messages """
-@app.route("/messages", methods=["GET", "POST"])
+@app.route("/messages")
 def messages():
 
-    return messages_list
+    if request.method == "GET":
 
+        return messages_dict
 
-
-
+""" route for generating username"""
 @app.route("/username", methods=["POST"])
 def user():
 
+
     username = request.form.get("username")
 
-    print (f" username in username is {username}")
-    session["username"]=username
-
-    users.append(username)
-
-    if not username:
+    #if user somehow failed to enter the username b/c my javascript failed
+    if not username or username == '':
         return jsonify({"success": False})
 
-    return jsonify({"success": True})
+    #if user succeded in entering a username
+    else:
+
+        session["username"]=username
+
+        users.append(username)
+
+        return jsonify({"success": True, "username": username})
 
 @app.route("/createchanel", methods=["POST"])
 def createchanel():
@@ -128,7 +143,12 @@ def createchanel():
 
     print (f"chanel is {new_chanel}")
 
+    #add chanel to chanel list
     chanels_list.append(new_chanel)
+
+    """ add chanel to messages dict"""
+    messages_dict["new_chanel"]=[]
+    print(f"this is messages_dict {messages_dict}: ")
 
     return jsonify({"success": True, "new_chanel": new_chanel})
 
