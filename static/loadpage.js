@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   ///start by loading index.innerHTML
-  load_page('/');
+  load_page('/messages');
 
   //set links up to load new pages.
   document.querySelectorAll('.nav-link').forEach(link => {

@@ -33,11 +33,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const data =  JSON.parse(request.responseText);
 
     if (data.success) {
-      const contents = `chanel is ${data['new_chanel']}`;
 
-      document.querySelector('#chanel').innerHTML = contents;
 
-      li.innerHTML = contents;
+
+
+      const chanels = data['chanels']
+
+      var text = "";
+      var chanel;
+
+      for (chanel in chanels) {
+        txt =+ chanels[chanel] + " ";
+
+        li.innerHTML = txt;
+        console.log(txt);
+        console.log(chanels);
+        document.querySelector('#chanels').append(li);
+      }
+
+
+      const new_contents = `chanel is ${data['new_chanel']}`;
+
+      document.querySelector('#chanel').innerHTML = new_contents;
+
+      li.innerHTML = new_chanel;
 
       document.querySelector('#chanels').append(li);
     }
@@ -54,14 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
    data.append('new_chanel', new_chanel);
    request.send(data);
    document.querySelector('#new_chanel').value = '';
-   return false
+   //return false;
+   //("/");
 
-  //document.querySelector('#cnelsubmit').disabled = true;
-
-    ///clear the form
-  //
-    /// set chanel subit back to disabled
 
   };
-
+   //return false;
 });

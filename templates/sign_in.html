@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+
+<h1>welcome to JOSlack</h1>
+<label for="username"> Enter your username</label>
+    <form action="/sign_in" method="post">
+        <div class="form-group">
+            <input id="username" autocomplete="off" autofocus class="form-log" name="username" placeholder="Username" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Sign In</button>
+    </form>
+{% endblock %}

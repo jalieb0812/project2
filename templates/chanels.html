@@ -73,7 +73,7 @@ textarea {
 
      <form id="addchanel" action="/chanels" method="post" style = text-center>
        <input  id="new_chanel" type="text" autocomplete="off" autofocus placeholder="chanel">
-      <button type="submit" id="chanelsubmit" name="button"> create chanel</button>
+      <button  type="submit"  id="chanelsubmit" name="button"> create chanel</button>
      </form>
 
      <div  id="slackchanels">
@@ -86,8 +86,8 @@ textarea {
        <ul id ="chanels" >
           {% for chanel in chanels_list %}
              <li>
-               <a  href="{{ url_for('createchanel') }} ">
-                   {{ chanel }}
+               <a  href="/chanels/<chanel>" class="nav-link" id="chanel" data-page="messages">
+                 chanel:  {{ chanel }}
                </a>
             </li>
 
@@ -144,7 +144,7 @@ textarea {
 <li id="newmessage"> </li>
 
 <textarea id="messages" name="chatroom" rows="8" cols="80" style ="justify-content: center" readonly>
-{% for message in messages_dict %}
+{% for message in chanel_message_list.values() %}
      {{message}}
   {% endfor %}
 </textarea>

@@ -12,12 +12,12 @@
 
         <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+      
 
       <!-- <script src="{{url_for('static', filename = 'loadpage.js')}}"> </script> -->
       <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 
-      <script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
+    <!--  <script src="{{url_for('static', filename = 'chanels.js')}}"> </script> -->
 
     <title>  {% block title %}JO FLACK APP APP: {% endblock %}</title>
 
@@ -41,7 +41,7 @@
                     <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
                     </ul>
-  
+
                 {% endif %}
             </div>
         </nav>

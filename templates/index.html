@@ -64,12 +64,15 @@ input[type=submit]{
 </style>
 
 
-<!--<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script>-->
+<!--<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script> -->
 
 <!--<script src="{{url_for('static', filename = 'usernamestorage.js')}}"> </script> -->
 
 <script src="{{url_for('static', filename = 'users.js')}}"> </script>
- <script src="{{url_for('static', filename = 'index.js')}}"> </script>
+<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
+<script src="{{url_for('static', filename = 'index.js')}}"> </script>
+
+ <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
 
 
 
@@ -80,16 +83,16 @@ input[type=submit]{
 <h4 id="welcometext" style="color:white"></h4>
 
 
-{% if not session.username %}
+
 <div>
 
   <form id="users"  style = text-center >
-    <input  id="username" type="text" autocomplete="off" autofocus placeholder="username" required >
+    <input  id="username" type="text" autocomplete="off" autofocus placeholder="username" >
     <input type="submit"  value="sign in"></input>
   </form>
 
 </div>
-{% endif %}
+
 
 
 
@@ -100,10 +103,28 @@ input[type=submit]{
 
      <div style="justify-content: center">
          <form id="addchanel"  style = text-center >
-           <input  id="new_chanel" type="text" autocomplete="off" autofocus placeholder="chanel" required>
+           <input  id="new_chanel" type="text" autocomplete="off" autofocus placeholder="chanel" >
           <input id="chanelsubmit" type="submit" value="create chanel"> </input>
        </form>
      </div>
+
+   <div class="form-group">
+     <div style="justify-content: center">
+       <label for="c">Choose a chanel:</label>
+         <form id="select_chanel"  style = text-center >
+         <select autofocus class="form-log" id="chanel_select" name="chanel_select" >
+           <option disabled="" selected="" value="">chanel</option>
+           {% for chanel in chanels_list %}
+               <option >{{ chanel }}</option>
+           {% endfor %}
+       </select>
+         <button  type="submit"  >Submit</button>
+      </form>
+
+    </div>
+
+   </div>
+<a href="#"></a>
 
 <div  id="slackchanels">
 
@@ -115,9 +136,9 @@ input[type=submit]{
 
 <ul id ="chanels" >
    {% for chanel in chanels_list %}
-      <li>
-        <a  href="" class="nav-link" id="chanel" data-page="messages">
-            {{ chanel }}
+      <li >
+        <a   href="" class="nav-link" id="chanel" data-page="messages">
+          chanel:  {{ chanel }}
         </a>
      </li>
 
@@ -136,13 +157,13 @@ input[type=submit]{
 
   <div class="p-2">
 
+<h3 id="userwelcome"> </h3>
+{% if session.username %}
         <p id="demo"></p>
-         <h1 id="greeting"></h1>
+         <h1 id="greeting"> welcome, {{session.username}} </h1>
+         <h3 id= current_chanel> chanel: {{session.chanel}}</h3>
          <!-- this h3 is for practicing ajax -->
-         <h3 id="userwelcome"></h3>
-
-  
-
+{% endif %}
      <div class="container">
 
 
@@ -155,11 +176,17 @@ input[type=submit]{
   <li> </li>
 </div>
 
+
+
 <div class="form-group row" >
    <textarea id="messages" class="form-control" name="chatroom" rows="10" width=100% flex style ="justify-content: center" readonly>
+
+
       {% for message in messages_dict.values() %}
           {{message}}
        {% endfor %}
+
+
     </textarea>
  </div>
 
