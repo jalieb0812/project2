@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   ///start by loading index.innerHTML
-  load_page('/messages');
+  load_page('/');
 
   //set links up to load new pages.
   document.querySelectorAll('.nav-link').forEach(link => {
@@ -27,7 +27,7 @@ window.onpopstate = e => {
 
 function load_page(name) {
   const request = new XMLHttpRequest();
-  request.open('GET', `/${name}`);
+  request.open('GET', `/messages`);
   request.onload = () => {
     const response = request.responseText;
     document.querySelector('#messagespage').innerHTML = response;

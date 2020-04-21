@@ -95,6 +95,7 @@ def sign_in():
         print(f"username is {username}")
 
         session['username']= username
+        users.append(username)
 
 
 
@@ -207,8 +208,9 @@ def message(data):
 
 
 """ route for sending the stored messages """
-@app.route("/messages", methods = ["POST"])
+@app.route("/messages", methods = ["GET"])
 def messages():
+
     if len(chanels_list) > 0:
         chanel = request.form.get("chanel_select")
         #chanel = chanels_list[len(chanels_list) - 1]
@@ -221,17 +223,19 @@ def messages():
 
         print(messages_dict)
 
-        print(f"this is messages list: {messages_list}")
+    #    print(f"this is messages list: {messages_list}")
 
 
 
         return str(old_chats)
 
 
+    else:
+
+        return redirect('/')
 
 
 
-    return redirect("/chanels/" + new_chanel)
 
 
 @app.route("/chanels/<chanel>", methods=["GET", "POST"])
