@@ -50,7 +50,7 @@ messages_list=[]
 
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/" , methods=["GET", "POST"])
 @login_required
 def index():
 
@@ -81,14 +81,11 @@ def index():
 @app.route("/sign_in", methods=["GET", "POST"])
 def sign_in():
 
-
     session.clear()
 
 
 
     if request.method=="POST":
-
-
 
         username = request.form.get("username")
 
@@ -97,16 +94,77 @@ def sign_in():
         session['username']= username
         users.append(username)
 
+        try:
+            session.get(session["chanel"])
+
+            return redirect('/')
+
+        except:
+
+            return redirect("/chanels")
 
 
-        return redirect('/')
 
     if request.method=="GET":
 
         return render_template("sign_in.html")
 
 
+@app.route("/chanels", methods = ["GET", "POST"])
+def chanels():
+
+    if request.method == "GET":
+
+        return render_template ("chanels.html", chanels_list = chanels_list)
+
+
+
+    if request.form.get("new_chanel"):
+
+        new_chanel = request.form.get("new_chanel")
+
+        chanels_list.append(new_chanel)
+
+        session["chanel"] = new_chanel
+
+        """ add chanel to messages dict """
+
+        #messages_dict[new_chanel]= []
+
+        print(f"this is messages_dict {messages_dict}: ")
+
+    if request.form.get("current_chanels"):
+
+        current_chanel = request.form.get("current_chanels")
+
+        session["chanel"] = current_chanel
+
+        print(f"this is messages_dict {messages_dict}: ")
+
+
+    #session["messagesdict"]=messages_dict
+
+    return redirect(url_for('index'))
+
+    #return redirect(url_for('index', messages_dict=messages_dict, *request.args))
+
+
+@app.route("/chanel/<chanel>", methods=["GET", "POST"])
+def enter_chanel(chanel):
+
+    if request.method=="GET":
+        chanel=request.form.get("select_chanel")
+        #chanel = session["chanel"]
+        chanel_message_list = messages_dict["4"]
+        return render_template("chanels.html", users=users, chanels_list=chanels_list, chanel_message_list=chanel_message_list,
+                            messages_dict=messages_dict, messages_list=messages_list, chanel=session['chanel'])
+
+    else:
+        return redirect("/")
+
+
 """ route for generating username"""
+
 @app.route("/username", methods=["POST"])
 def user():
 
@@ -128,35 +186,6 @@ def user():
 
     return jsonify({"success": True, "username": username})
 
-@app.route("/createchanel", methods=["GET", "POST"])
-def createchanel():
-
-
-    new_chanel = request.form.get('new_chanel')
-
-
-    if request.method== "POST":
-
-        new_chanel = request.form.get('new_chanel')
-
-
-        if not new_chanel:
-            return jsonify({"success": False})
-
-        session["chanel"]=new_chanel
-
-        print (f"chanel is {new_chanel}")
-
-        #add chanel to chanel list
-        chanels_list.append(new_chanel)
-
-        chanels = chanels_list
-
-        """ add chanel to messages dict"""
-        messages_dict[new_chanel]=[]
-        print(f"this is messages_dict {messages_dict}: ")
-
-        return jsonify({"success": True, "new_chanel": new_chanel, "chanles": chanels})
 
 
 @socketio.on("submit message")
@@ -169,17 +198,23 @@ def message(data):
     timestamp = datetime.datetime.now().strftime("Date: %Y-%m-%d Time: %H:%M:%S")
 
 
-    messagelist = []
+    #messagelist = []
 
-    messagesdict = {}
 
     chanel= session["chanel"]
+
+    #messages_dict[chanel] = []
 
     print(f"this is the chanel in submit message: {chanel}")
 
 
-
     full_message = timestamp + ": " + session["username"] + ": " +  message
+
+    messages_list.append(full_message)
+
+    print(f"this is messages_list in submit message after append:  {messages_list}: \n")
+
+
 
     """
     messagelist.append(full_message)
@@ -190,12 +225,25 @@ def message(data):
 
     """
 
+    print(f"this is messages_dict in submit message before addition:  {messages_dict}: \n")
 
-    messages_dict[chanel].append(timestamp + ": " + session["username"] + ": " +  message)
+    if chanel in messages_dict:
 
-    messages_list.append("chanel: " +  chanel  + ":" +  str(messages_dict))
+        print(f"this is last element in messages_list: {messages_list[:-1]}")
+        messages_dict[chanel].append(messages_list[-1])
+    else:
+        print("this else is happening")
+        messages_dict[chanel] = [full_message]
 
-    print(f"this is messages_dict {messages_dict}: ")
+    #messages_dict[chanel] = timestamp + ": " + session["username"] + ": " +  message
+
+    print(f"this is messages_dict in submit message after addition:  {messages_dict}: \n")
+
+    #messages_list.append("chanel: " +  chanel  + ":" +  str(messages_dict))
+
+
+
+
 
 
 
@@ -238,22 +286,38 @@ def messages():
 
 
 
-@app.route("/chanels/<chanel>", methods=["GET", "POST"])
-def enter_chanel(chanel):
-
-    if request.method=="GET":
-        chanel=request.form.get("select_chanel")
-        #chanel = session["chanel"]
-        chanel_message_list = messages_dict["4"]
-        return render_template("chanels.html", users=users, chanels_list=chanels_list, chanel_message_list=chanel_message_list,
-                            messages_dict=messages_dict, messages_list=messages_list, chanel=session['chanel'])
-
-    else:
-        return redirect("/")
 
 
 
+@app.route("/createchanel", methods=["GET", "POST"])
+def createchanel():
 
+
+    new_chanel = request.form.get('new_chanel')
+
+
+    if request.method== "POST":
+
+        new_chanel = request.form.get('new_chanel')
+
+
+        if not new_chanel:
+            return jsonify({"success": False})
+
+        session["chanel"]=new_chanel
+
+        print (f"chanel is {new_chanel}")
+
+        #add chanel to chanel list
+        chanels_list.append(new_chanel)
+
+        chanels = chanels_list
+
+        """ add chanel to messages dict"""
+        messages_dict[new_chanel]=[]
+        print(f"this is messages_dict {messages_dict}: ")
+
+        return jsonify({"success": True, "new_chanel": new_chanel, "chanles": chanels})
 
 @app.route("/logout")
 def logout():

@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block main %}
+
+<style >
+  .container-fluid {
+
+
+
+    background-color: inherit;
+    text-align: center;
+
+    gutter: none;
+  }
+
+.col-8 {
+background-color:yellow;
+
+}
+
+
+  #namespace {
+
+    background-color: DodgerBlue;
+    color: white;
+    margin: 10px;
+    text-align: center;
+    text: wrap
+    justify-content: flex-end;
+  }
+
+  #greeting{
+
+    justify-content: center;
+  }
+
+textarea {
+    justify-content: center;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    width: 100%;
+
+  }
+
+  #message{
+
+    hight: 100%;
+    width: 100%;
+  }
+
+input[type=submit]{
+    float: center;
+}
+
+
+
+</style>
+
+
+<!--<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script> -->
+
+<!--<script src="{{url_for('static', filename = 'usernamestorage.js')}}"> </script> -->
+
+<!--
+
+<script src="{{url_for('static', filename = 'users.js')}}"> </script>
+<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
+<script src="{{url_for('static', filename = 'index.js')}}"> </script>
+
+ <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
+
+
+
+<div class="container-fluid" style= "margin-top:30px">
+
+
+
+<h4 id="chanelwelcometext" style="color:white">Choose an exisitng chanel or create a new chanel </h4>
+
+
+
+<div>
+
+   <form action="/chanels" method="post">
+
+<p>create a new chanel</p>
+
+      <div class="form-group">
+      <label for="new_chanel">New chanel:</label>
+     <input type="text" class="form-control" id="new_chanel" name="new_chanel">
+     </div>
+
+<p>choose an existing chanel from the below listed chanels</p>
+     <div class="form-group">
+           <select  class="form-log" name="current_chanels" id="current_chanels" style="width:50%">
+             <option disabled="" selected="" value="">chanel</option>
+             {% for chanel in chanels_list %}
+                 <option name="current_chanel" id="current_chanel" value="{{ chanel }}">{{ chanel }}</option>
+               {% else %}
+                <option disabled="" selected="" value="">no current chanels. please create one.</option>
+
+             {% endfor %}
+         </select>
+     </div>
+
+     <button class="btn btn-primary" type="submit">Submit</button>
+ </form>
+
+
+</div>
+{% endblock %}
