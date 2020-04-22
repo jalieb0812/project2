@@ -71,7 +71,7 @@ input[type=submit]{
 
 
 <script src="{{url_for('static', filename = 'users.js')}}"> </script>
-<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
+<!--<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>-->
 <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
  <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
@@ -103,29 +103,62 @@ input[type=submit]{
 
   <div class="p-2 bg-info">
 
-     <div style="justify-content: center">
-         <form id="addchanel"  style = text-center >
-           <input  id="new_chanel" type="text" autocomplete="off" autofocus placeholder="chanel" >
-          <input id="chanelsubmit" type="submit" value="create chanel"> </input>
-       </form>
-     </div>
+<!--
+    <form action="/chanel/<chanel>" method="post">
 
-   <div class="form-group">
-     <div style="justify-content: center">
-       <label for="c">Choose a chanel:</label>
-         <form id="select_chanel"  style = text-center >
-         <select autofocus class="form-log" id="chanel_select" name="chanel_select" >
-           <option disabled="" selected="" value="">chanel</option>
-           {% for chanel in chanels_list %}
-               <option >{{ chanel }}</option>
-           {% endfor %}
-       </select>
-         <button  type="submit"  >Submit</button>
-      </form>
+ <p>create a new chanel</p>
 
-    </div>
+       <div class="form-group">
+       <label for="add_chanel">New chanel:</label>
+      <input type="text" class="form-control" id="add_chanel" name="add_chanel">
+      </div>
 
-   </div>
+ <p>choose an existing chanel from the below listed chanels</p>
+      <div class="form-group">
+            <select  class="form-log" name="current_chanels" id="current_chanels">
+              <option disabled="" selected="" value="">chanel</option>
+              {% for chanel in chanels_list %}
+                  <option name="current_chanel" id="current_chanel" value="{{ chanel }}">{{ chanel }}</option>
+                {% else %}
+                 <option disabled="" selected="" value="">no current chanels. please create one.</option>
+
+              {% endfor %}
+          </select>
+      </div>
+
+      <input class="btn btn-primary" id="chanelsubmit" type="submit" value="create chanel"> </input>
+
+  </form>
+
+  -->
+<!-- new code above -->
+
+
+<div style="justify-content: center">
+    <form id="addchanel"  style = text-center >
+      <input  id="new_chanel" type="text" autocomplete="off" autofocus placeholder="chanel" >
+     <input id="chanelsubmit" type="submit" value="create chanel"> </input>
+  </form>
+</div>
+
+<div class="form-group">
+<div style="justify-content: center">
+  <label for="c">Choose a chanel:</label>
+    <form id="select_chanel"  style = text-center >
+    <select autofocus class="form-log" id="chanel_select" name="chanel_select" >
+      <option disabled="" selected="" value="">chanel</option>
+      {% for chanel in chanels_list %}
+          <option >{{ chanel }}</option>
+      {% endfor %}
+  </select>
+    <button  type="submit"  >Submit</button>
+ </form>
+
+</div>
+
+</div>
+
+
 <a href="#"></a>
 
 <div  id="slackchanels">
@@ -139,7 +172,7 @@ input[type=submit]{
 <ul id ="chanels" >
    {% for chanel in chanels_list %}
       <li >
-        <a   href="" class="nav-link" id="chanel" data-page="messages">
+        <a   href="{{ url_for('chanel', chanel=chanel)}}" class="nav-link" id="chanel" data-page="messages">
           chanel:  {{ chanel }}
         </a>
      </li>

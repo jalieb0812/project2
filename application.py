@@ -54,10 +54,38 @@ messages_list=[]
 @login_required
 def index():
 
+    if request.method == "GET":
+
         session.get('username')
         print(f"this is the chanels {chanels_list}")
 
         return render_template("index.html",  users=users, chanels_list=chanels_list, messages_dict=messages_dict, messages_list=messages_list)
+
+
+    if request.method == "POST":
+        if request.form.get("add_chanel"):
+
+            chanel = request.form.get("add_chanel")
+
+            chanels_list.append(chanel)
+
+            session["chanel"] = chanel
+
+            """ add chanel to messages dict """
+
+            #messages_dict[new_chanel]= []
+
+            print(f"this is messages_dict {messages_dict}: ")
+
+        if request.form.get("current_chanels"):
+
+            chanel = request.form.get("current_chanels")
+
+            session["chanel"] = chanel
+
+            print(f"this is messages_dict {messages_dict}: ")
+
+        return  render_template('chanel.html', chanel=chanel)
 
 
             #print(f"these are the messages: {messages_dict}")
@@ -150,13 +178,13 @@ def chanels():
 
 
 @app.route("/chanel/<chanel>", methods=["GET", "POST"])
-def enter_chanel(chanel):
+def chanel(chanel):
 
     if request.method=="GET":
-        chanel=request.form.get("select_chanel")
-        #chanel = session["chanel"]
-        chanel_message_list = messages_dict["4"]
-        return render_template("chanels.html", users=users, chanels_list=chanels_list, chanel_message_list=chanel_message_list,
+
+        session['chanel']=chanel
+
+        return render_template("chanel.html", users=users, chanels_list=chanels_list,
                             messages_dict=messages_dict, messages_list=messages_list, chanel=session['chanel'])
 
     else:

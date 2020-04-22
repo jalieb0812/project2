@@ -60,7 +60,28 @@ input[type=submit]{
 }
 
 
+.vertical-menu {
+  width: 200px; /* Set a width if you like */
+  height: 400px;
+ overflow-y: auto;
+}
 
+.vertical-menu a {
+  background-color: #eee; /* Grey background color */
+  color: black; /* Black text color */
+  display: block; /* Make the links appear below each other */
+  padding: 12px; /* Add some padding */
+  text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+  background-color: #4CAF50; /* Add a green color to the "active/current" link */
+  color: white;
+}
 </style>
 
 
@@ -103,6 +124,34 @@ input[type=submit]{
 
   <div class="p-2 bg-info">
 
+<!--
+    <form action="/chanel" method="post">
+
+ <p>create a new chanel</p>
+
+       <div class="form-group">
+       <label for="add_chanel">New chanel:</label>
+      <input type="text" class="form-control" id="add_chanel" name="add_chanel">
+      </div>
+
+ <p>choose an existing chanel from the below listed chanels</p>
+      <div class="form-group">
+            <select  class="form-log" name="current_chanels" id="current_chanels">
+              <option disabled="" selected="" value="">chanel</option>
+              {% for chanel in chanels_list %}
+                  <option name="current_chanel" id="current_chanel" value="{{ chanel }}">{{ chanel }}</option>
+                {% else %}
+                 <option disabled="" selected="" value="">no current chanels. please create one.</option>
+
+              {% endfor %}
+          </select>
+      </div>
+
+      <input class="btn btn-primary" id="chanelsubmit" type="submit" value="create chanel"> </input>
+
+  </form>
+-->
+
      <div style="justify-content: center">
          <form id="addchanel"  style = text-center >
            <input  id="new_chanel" type="text" autocomplete="off" autofocus placeholder="chanel" >
@@ -112,34 +161,34 @@ input[type=submit]{
 
    <div class="form-group">
      <div style="justify-content: center">
-       <label for="c">Choose a chanel:</label>
-         <form id="select_chanel"  style = text-center >
+       <label for="chanel_select">Choose a chanel:</label>
+         <form id="select_chanel"  action="{{ url_for('chanel', chanel=session.chanel)}}" method="get" style = text-center >
          <select autofocus class="form-log" id="chanel_select" name="chanel_select" >
            <option disabled="" selected="" value="">chanel</option>
            {% for chanel in chanels_list %}
-               <option >{{ chanel }}</option>
-           {% endfor %}
+               <option value="{{ chanel }}" >{{ chanel }}</option>
+            {% endfor %}
        </select>
-         <button  type="submit"  >Submit</button>
+         <button  type="submit" formaction="{{ url_for('chanel', chanel=chanel) }}">Submit</button>
+
       </form>
 
     </div>
 
    </div>
-<a href="#"></a>
+
 
 <div  id="slackchanels">
 
-
   <ul id="nav">
-        <li><a href="" class="nav-link" id="chanel" data-page="messages"></a></li>
+        <li><a href="" class="nav-link" id="chanel" data-page="messages"></a> Current Chanel: {{session.chanel}}</li>
   </ul>
 
-
+<!--
 <ul id ="chanels" >
    {% for chanel in chanels_list %}
       <li >
-        <a   href="" class="nav-link" id="chanel" data-page="messages">
+        <a   href="{{ url_for('chanel', chanel=chanel)}} " class="nav-link" id="chanel" data-page="messages">
           chanel:  {{ chanel }}
         </a>
      </li>
@@ -149,6 +198,24 @@ input[type=submit]{
       {% endfor %}
 
 </ul>
+-->
+<div class="vertical-menu">
+
+<ul id ="chanels" >
+   {% for chanel in chanels_list %}
+      <li >
+        <a   href="{{ url_for('chanel', chanel=chanel)}} " class="nav-link" id="chanel" data-page="messages">
+          chanel:  {{ chanel }}
+        </a>
+     </li>
+
+       {% else %}
+     <li>No chanels</li>
+      {% endfor %}
+
+</ul>
+</div>
+
 
 </div>
     </div>
