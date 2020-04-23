@@ -7,59 +7,6 @@
 {% block main %}
 
 <style >
-  .container-fluid {
-
-
-
-    background-color: inherit;
-    text-align: center;
-
-    gutter: none;
-  }
-
-.col-8 {
-background-color:yellow;
-
-}
-
-
-  #namespace {
-
-    background-color: DodgerBlue;
-    color: white;
-    margin: 10px;
-    text-align: center;
-    text: wrap
-    justify-content: flex-end;
-  }
-
-  #greeting{
-
-    justify-content: center;
-  }
-
-textarea {
-    justify-content: center;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    width: 100%;
-
-  }
-
-  #message{
-
-    hight: 100%;
-    width: 100%;
-  }
-
-input[type=submit]{
-    float: center;
-}
-
-
 
 </style>
 
@@ -71,7 +18,7 @@ input[type=submit]{
 
 
 <script src="{{url_for('static', filename = 'users.js')}}"> </script>
-<!--<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>-->
+<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
 <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
  <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
@@ -81,21 +28,7 @@ input[type=submit]{
 <div class="container-fluid" style= "margin-top:30px">
 
 
-
 <h4 id="welcometext" style="color:white"></h4>
-
-
-
-<div>
-
-  <form id="users"  style = text-center >
-    <input  id="username" type="text" autocomplete="off" autofocus placeholder="username" >
-    <input type="submit"  value="sign in"></input>
-  </form>
-
-</div>
-
-
 
 
 <div class="d-flex justify-content-between bg-secondary mb-3">
@@ -134,32 +67,17 @@ input[type=submit]{
 <!-- new code above -->
 
 
-<div style="justify-content: center">
-    <form id="addchanel"  style = text-center >
-      <input  id="new_chanel" type="text" autocomplete="off" autofocus placeholder="chanel" >
-     <input id="chanelsubmit" type="submit" value="create chanel"> </input>
-  </form>
-</div>
-
 <div class="form-group">
-<div style="justify-content: center">
-  <label for="c">Choose a chanel:</label>
-    <form id="select_chanel"  style = text-center >
-    <select autofocus class="form-log" id="chanel_select" name="chanel_select" >
-      <option disabled="" selected="" value="">chanel</option>
-      {% for chanel in chanels_list %}
-          <option >{{ chanel }}</option>
-      {% endfor %}
-  </select>
-    <button  type="submit"  >Submit</button>
- </form>
-
-</div>
-
+ <div style="justify-content: center">
+    <form id="addchanel"  style = text-center >
+   <input  id="new_chanel" class="form-control" name="new_chanel" type="text" autocomplete="off"  placeholder="chanel" >
+      <input class="btn btn-primary"  id="chanelsubmit" type="submit" value="create chanel"> </input>
+   </form>
+ </div>
 </div>
 
 
-<a href="#"></a>
+
 
 <div  id="slackchanels">
 
@@ -169,19 +87,23 @@ input[type=submit]{
   </ul>
 
 
-<ul id ="chanels" >
+<div class="vertical-menu">
+
+<div id ="chanels" >
    {% for chanel in chanels_list %}
-      <li >
-        <a   href="{{ url_for('chanel', chanel=chanel)}}" class="nav-link" id="chanel" data-page="messages">
+
+        <a   href="{{ url_for('chanel', chanel=chanel, username=session.username)}} " class="nav-link" id="chanel" data-page="messages">
           chanel:  {{ chanel }}
         </a>
-     </li>
 
        {% else %}
      <li>No chanels</li>
       {% endfor %}
 
-</ul>
+ </div>
+</div>
+
+
 
 </div>
     </div>

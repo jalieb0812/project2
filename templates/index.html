@@ -7,91 +7,17 @@
 {% block main %}
 
 <style >
-  .container-fluid {
 
-
-
-    background-color: inherit;
-    text-align: center;
-
-    gutter: none;
-  }
-
-.col-8 {
-background-color:yellow;
-
-}
-
-
-  #namespace {
-
-    background-color: DodgerBlue;
-    color: white;
-    margin: 10px;
-    text-align: center;
-    text: wrap
-    justify-content: flex-end;
-  }
-
-  #greeting{
-
-    justify-content: center;
-  }
-
-textarea {
-    justify-content: center;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    width: 100%;
-
-  }
-
-  #message{
-
-    hight: 100%;
-    width: 100%;
-  }
-
-input[type=submit]{
-    float: center;
-}
-
-
-.vertical-menu {
-  width: 200px; /* Set a width if you like */
-  height: 400px;
- overflow-y: auto;
-}
-
-.vertical-menu a {
-  background-color: #eee; /* Grey background color */
-  color: black; /* Black text color */
-  display: block; /* Make the links appear below each other */
-  padding: 12px; /* Add some padding */
-  text-decoration: none; /* Remove underline from links */
-}
-
-.vertical-menu a:hover {
-  background-color: #ccc; /* Dark grey background on mouse-over */
-}
-
-.vertical-menu a.active {
-  background-color: #4CAF50; /* Add a green color to the "active/current" link */
-  color: white;
-}
 </style>
 
 
 <!--<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script> -->
 
-<!--<script src="{{url_for('static', filename = 'usernamestorage.js')}}"> </script> -->
+<script src="{{url_for('static', filename = 'usernamestorage.js')}}"> </script>
 
 
 
-<script src="{{url_for('static', filename = 'users.js')}}"> </script>
+<!--<script src="{{url_for('static', filename = 'users.js')}}"> </script> -->
 <script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
 <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
@@ -99,168 +25,91 @@ input[type=submit]{
 
 
 
-<div class="container-fluid" style= "margin-top:30px">
+<div class="container-flex">
 
 
 
+<!--
 <h4 id="welcometext" style="color:white"></h4>
-
-
-
 <div>
-
   <form id="users"  style = text-center >
-    <input  id="username" type="text" autocomplete="off" autofocus placeholder="username" >
+    <input   id="username" type="text" autocomplete="off" autofocus placeholder="username" >
     <input type="submit"  value="sign in"></input>
   </form>
-
 </div>
-
-
-
-
-<div class="d-flex justify-content-between bg-secondary mb-3">
-
-
-  <div class="p-2 bg-info">
-
-<!--
-    <form action="/chanel" method="post">
-
- <p>create a new chanel</p>
-
-       <div class="form-group">
-       <label for="add_chanel">New chanel:</label>
-      <input type="text" class="form-control" id="add_chanel" name="add_chanel">
-      </div>
-
- <p>choose an existing chanel from the below listed chanels</p>
-      <div class="form-group">
-            <select  class="form-log" name="current_chanels" id="current_chanels">
-              <option disabled="" selected="" value="">chanel</option>
-              {% for chanel in chanels_list %}
-                  <option name="current_chanel" id="current_chanel" value="{{ chanel }}">{{ chanel }}</option>
-                {% else %}
-                 <option disabled="" selected="" value="">no current chanels. please create one.</option>
-
-              {% endfor %}
-          </select>
-      </div>
-
-      <input class="btn btn-primary" id="chanelsubmit" type="submit" value="create chanel"> </input>
-
-  </form>
 -->
 
-     <div style="justify-content: center">
-         <form id="addchanel"  style = text-center >
-           <input  id="new_chanel" type="text" autocomplete="off" autofocus placeholder="chanel" >
-          <input id="chanelsubmit" type="submit" value="create chanel"> </input>
+<div class="d-flex justify-content-between bg-secondary">
+
+ <div class="my-flex-container-column">
+
+  <div class=" bg-info">
+    <div class=" form-row-add-chanel-form">
+        <form id="addchanel"  style = text-center >
+       <input  id="new_chanel" class="form-control" name="new_chanel" type="text" autocomplete="off"  placeholder="chanel" >
+          <input class="btn btn-primary"  id="chanelsubmit" type="submit" value="create chanel"> </input>
        </form>
-     </div>
-
-   <div class="form-group">
-     <div style="justify-content: center">
-       <label for="chanel_select">Choose a chanel:</label>
-         <form id="select_chanel"  action="{{ url_for('chanel', chanel=session.chanel)}}" method="get" style = text-center >
-         <select autofocus class="form-log" id="chanel_select" name="chanel_select" >
-           <option disabled="" selected="" value="">chanel</option>
-           {% for chanel in chanels_list %}
-               <option value="{{ chanel }}" >{{ chanel }}</option>
-            {% endfor %}
-       </select>
-         <button  type="submit" formaction="{{ url_for('chanel', chanel=chanel) }}">Submit</button>
-
-      </form>
-
     </div>
 
-   </div>
-
-
-<div  id="slackchanels">
-
-  <ul id="nav">
-        <li><a href="" class="nav-link" id="chanel" data-page="messages"></a> Current Chanel: {{session.chanel}}</li>
-  </ul>
+      <div  id="slackchanels">
 
 <!--
-<ul id ="chanels" >
-   {% for chanel in chanels_list %}
-      <li >
-        <a   href="{{ url_for('chanel', chanel=chanel)}} " class="nav-link" id="chanel" data-page="messages">
-          chanel:  {{ chanel }}
-        </a>
-     </li>
-
-       {% else %}
-     <li>No chanels</li>
-      {% endfor %}
-
-</ul>
+  <div id="nav">
+        <p><a href="" class="nav-link" id="chanel" data-page="messages"></a> Current Chanel: {{session.chanel}}</p>
+  </div>
 -->
 <div class="vertical-menu">
 
-<ul id ="chanels" >
+ <div id ="chanels" >
    {% for chanel in chanels_list %}
-      <li >
-        <a   href="{{ url_for('chanel', chanel=chanel)}} " class="nav-link" id="chanel" data-page="messages">
+
+        <a   href="{{ url_for('chanel', chanel=chanel, username=session.username )}} " class="nav-link" id="chanel" data-page="messages">
           chanel:  {{ chanel }}
         </a>
-     </li>
 
        {% else %}
      <li>No chanels</li>
       {% endfor %}
+ </div>
 
-</ul>
-</div>
+      </div>
+     </div>
+     </div>
+  </div>
 
+<div class="p-2 my-flex-container-column-messages">
 
-</div>
-    </div>
+     <div class="container-flex">
 
+       <div class="p-2">
+         <h3 id="userwelcome"> </h3>
+         {% if session.username %}
+          <p id="demo"></p>
+          <div class="row" style="justify-content: center">
+            <h4 id="greeting"> welcome, {{session.username}} </h4>
+            <p id= "current_chanel" style="align: right"> chanel: {{session.chanel}}</p>
+          </div>
 
-<div class="col-8 justify-content-center">
-
-
-  <div class="p-2">
-
-<h3 id="userwelcome"> </h3>
-{% if session.username %}
-        <p id="demo"></p>
-         <h1 id="greeting"> welcome, {{session.username}} </h1>
-         <h3 id= current_chanel> chanel: {{session.chanel}}</h3>
-         <!-- this h3 is for practicing ajax -->
-{% endif %}
-     <div class="container">
-
-
-
+                  <!-- this h3 is for practicing ajax -->
+         {% endif %}
 
   <li id="newmessage"> Latest message: </li>
-
 
 <div  id="messagespage">
   <li> </li>
 </div>
 
-
-
 <div class="form-group row" >
-   <textarea id="messages" class="form-control" name="chatroom" rows="10" width=100% flex style ="justify-content: center" readonly>
-
+   <textarea id="messages" class="form-control" name="chatroom" rows="8" width=100% flex style ="justify-content: center" readonly>
 
       {% for message in messages_dict[session.chanel] %}
           {{message}}
        {% endfor %}
 
-
     </textarea>
  </div>
 
     <hr>
-
 <form id="messaging" >
     <div class="form-group row" >
      <textarea id="message"  class="form-control" autofocus autocomplete="off" type="text" placeholder="message" required></textarea>
@@ -272,8 +121,9 @@ input[type=submit]{
   </div>
 </div>
 
+<div class="my-flex-container-column-users">
 
- <div class="p-2 bg-primary">
+ <div class=" bg-primary">
    <div  id="namespace" style ="justify-content: center">
      <h6>users</h6>
 
@@ -291,6 +141,6 @@ input[type=submit]{
      </div>
    </div>
   </div>
-
+</div>
 
 {% endblock %}

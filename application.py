@@ -59,7 +59,7 @@ def index():
         session.get('username')
         print(f"this is the chanels {chanels_list}")
 
-        return render_template("index.html",  users=users, chanels_list=chanels_list, messages_dict=messages_dict, messages_list=messages_list)
+        return render_template("index.html", username=session["username"],  users=users, chanels_list=chanels_list, messages_dict=messages_dict, messages_list=messages_list)
 
 
     if request.method == "POST":
@@ -85,7 +85,7 @@ def index():
 
             print(f"this is messages_dict {messages_dict}: ")
 
-        return  render_template('chanel.html', chanel=chanel)
+        return  render_template('chanel.html', username=session["username"], chanel=chanel)
 
 
             #print(f"these are the messages: {messages_dict}")
@@ -125,7 +125,7 @@ def sign_in():
         try:
             session.get(session["chanel"])
 
-            return redirect('/')
+            return redirect('/', username=session["username"], chanel=session["chanel"])
 
         except:
 
@@ -149,11 +149,11 @@ def chanels():
 
     if request.form.get("new_chanel"):
 
-        new_chanel = request.form.get("new_chanel")
+        chanel = request.form.get("new_chanel")
 
-        chanels_list.append(new_chanel)
+        chanels_list.append(chanel)
 
-        session["chanel"] = new_chanel
+        session["chanel"] = chanel
 
         """ add chanel to messages dict """
 
@@ -163,16 +163,16 @@ def chanels():
 
     if request.form.get("current_chanels"):
 
-        current_chanel = request.form.get("current_chanels")
+        chanel = request.form.get("current_chanels")
 
-        session["chanel"] = current_chanel
+        session["chanel"] = chanel
 
         print(f"this is messages_dict {messages_dict}: ")
 
 
     #session["messagesdict"]=messages_dict
 
-    return redirect(url_for('index'))
+    return redirect(url_for('index', username=session["username"], chanel=chanel))
 
     #return redirect(url_for('index', messages_dict=messages_dict, *request.args))
 
@@ -225,6 +225,8 @@ def message(data):
 
     timestamp = datetime.datetime.now().strftime("Date: %Y-%m-%d Time: %H:%M:%S")
 
+    username = session.get("username")
+
 
     #messagelist = []
 
@@ -268,12 +270,6 @@ def message(data):
     print(f"this is messages_dict in submit message after addition:  {messages_dict}: \n")
 
     #messages_list.append("chanel: " +  chanel  + ":" +  str(messages_dict))
-
-
-
-
-
-
 
     #messagedict = {"message": message, "username": session["username"]}
     #messagedict["message"] = message
@@ -357,6 +353,13 @@ def logout():
     # Redirect user to login form
     return redirect("/")
 
+if __name__ == "__main__":
+ port = int(os.environ.get("PORT", 8080))
+ socketio.run(app, host="0.0.0.0", port=port)
 
+"""
 if __name__ == '__main__':
+
+
     socketio.run(app)
+"""

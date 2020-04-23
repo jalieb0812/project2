@@ -1,39 +1,75 @@
-.flex-container-1 {
+.container-fluid {
 
-      display: flex;
-      flex-direction: column;
 
-      background-color: #f1f1f1;
+
+  background-color: inherit;
+  text-align: center;
+
+  gutter: none;
 }
 
-.flex-container-2 {
-
-      display: flex;
-      justify-content: flex-end;
-      flex-direction: row;
-
-      background-color: #f1f1f1;
-  }
-
-.flex-container > div {
-
-    background-color: DodgerBlue;
-    color: white;
-    width: 100px;
-    margin: 10px;
-    text-align: center;
-    text: wrap
+.col-8 {
+background-color:yellow;
 
 }
+
 
 #namespace {
 
   background-color: DodgerBlue;
   color: white;
-
   margin: 10px;
   text-align: center;
   text: wrap
   justify-content: flex-end;
+}
 
+#greeting{
+
+  justify-content: center;
+}
+
+textarea {
+  justify-content: center;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  width: 100%;
+
+}
+
+#message{
+
+  hight: 100%;
+  width: 100%;
+}
+
+input[type=submit]{
+  float: center;
+}
+
+
+.vertical-menu {
+width: 150px; /* Set a width if you like */
+height: 400px;
+overflow-y: auto;
+}
+
+.vertical-menu a {
+background-color: #eee; /* Grey background color */
+color: black; /* Black text color */
+display: block; /* Make the links appear below each other */
+padding: 12px; /* Add some padding */
+text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.vertical-menu a.active {
+background-color: #4CAF50; /* Add a green color to the "active/current" link */
+color: white;
 }

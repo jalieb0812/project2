@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('#messaging').onsubmit = () => {
         const message = document.querySelector("#message").value
         const timestamp = Math.floor(Date.now() / 1000)
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+      
+
         socket.emit("submit message", { 'timestamp': timestamp, 'username': username, "message": message })
         message.value = ''
         return false;
