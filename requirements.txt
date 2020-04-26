@@ -1,6 +1,6 @@
 Flask
-Flask_SocketIO
-flask_socketio
+Flask-SocketIO
+
 Flask-Session
 requests
 eventlet
