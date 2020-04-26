@@ -1,8 +1,12 @@
 Flask
-Flask-SocketIO
+Flask_SocketIO
+flask_socketio
 Flask-Session
 requests
 eventlet
 gevent-websocket
 gunicorn
 Werkzeug==0.16.0
+itsdangerous==1.1.0
+python-engineio==3.1.2
+python-socketio==3.0.1
