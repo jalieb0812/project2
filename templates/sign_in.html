@@ -6,7 +6,13 @@
 
 {% block main %}
 
-<h1>welcome to JOSlack</h1>
+
+
+
+
+<div class="container-flex-log">
+  <h1 id="sign_in_welcome">Welcome to JOSlack</h1>
+
 <label for="username"> Enter your username</label>
     <form action="/sign_in" method="post">
         <div class="form-group">
@@ -14,4 +20,6 @@
         </div>
         <button class="btn btn-primary" type="submit">Sign In</button>
     </form>
+  </div>
+
 {% endblock %}

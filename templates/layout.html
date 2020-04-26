@@ -30,14 +30,93 @@ nav .navbar
     font-size: xx-large;
 }
 
+
+}
 main .form-control
 {
-    /* center form controls */
+
+  /* center form controls */
+
 
     /* override Bootstrap's 100% width for form controls */
     width: auto;
+    display: inline-block;
+
+
+
 }
 
+main.form-group{
+
+  pad
+}
+
+main .form-log
+{
+    /* center form controls */
+
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+
+    flex-grow: 1;
+
+    display: inline-block;
+
+}
+
+main
+{
+
+    overflow-x: auto;
+    /* scroll horizontally as needed */
+
+
+    height: 100%;
+
+
+
+    /* center contents */
+    text-align: center;
+
+}
+
+main.col{
+
+  padding: 0px;
+}
+
+.container-flex-log{
+
+
+  text-align: center;
+
+  /* override Bootstrap's 100% width for form controls */
+  width: auto;
+
+  flex-grow: 1;
+
+  display: block;
+
+  margin-top: 10%;
+
+
+
+}
+
+#new_chanel{
+
+  width: auto;
+
+  display: inline-block;
+}
+
+
+
+
+
+
+}
 .container-flex{
 
 }
@@ -66,36 +145,15 @@ main .form-control
   width: 200px;
 }
 
-#current_chanel{
-  justify-content: flex-end;
-}
-main .form-log
-{
-    /* center form controls */
-    display: inline-block;
 
-    /* override Bootstrap's 100% width for form controls */
-    width: auto;
 
-    flex-grow: 1;
-}
-
-main
-{
-    /* scroll horizontally as needed */
-    overflow-x: auto;
-
-    height: 100%;
-
-    /* center contents */
-    text-align: center;
-
-}
 
 .container-fluid {
 
   background-color: inherit;
   text-align: center;
+
+  width: auto;
 
   gutter: none;
 }
@@ -222,7 +280,8 @@ color: white;
 
 
 
-        <main >
+        <main class="container"  >
+
             {% block main %}{% endblock %}
         </main>
 

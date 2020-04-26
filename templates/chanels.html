@@ -6,62 +6,7 @@
 
 {% block main %}
 
-<style >
-  .container-fluid {
 
-
-
-    background-color: inherit;
-    text-align: center;
-
-    gutter: none;
-  }
-
-.col-8 {
-background-color:yellow;
-
-}
-
-
-  #namespace {
-
-    background-color: DodgerBlue;
-    color: white;
-    margin: 10px;
-    text-align: center;
-    text: wrap
-    justify-content: flex-end;
-  }
-
-  #greeting{
-
-    justify-content: center;
-  }
-
-textarea {
-    justify-content: center;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    width: 100%;
-
-  }
-
-  #message{
-
-    hight: 100%;
-    width: 100%;
-  }
-
-input[type=submit]{
-    float: center;
-}
-
-
-
-</style>
 
 
 <!--<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script> -->
@@ -78,28 +23,36 @@ input[type=submit]{
 
 
 
-<div class="container-fluid" style= "margin-top:30px">
 
 
 
-<h4 id="chanelwelcometext" style="color:white">Choose an exisitng chanel or create a new chanel </h4>
+<h4 id="chanelwelcometext" style="color:white; margin-top:30px ">Choose an exisitng chanel or create a new chanel </h4>
 
 
-
-<div>
 
    <form action="/chanels" method="post">
 
+
+
 <p>create a new chanel</p>
 
-      <div class="form-group">
-      <label for="new_chanel">New chanel:</label>
+  <div class="form-row">
+      <div class="col">
+  <label for="new_chanel" class="col-form-label">New chanel:</label>
+
      <input type="text" class="form-control" id="new_chanel" name="new_chanel">
      </div>
 
+  </div>
 <p>choose an existing chanel from the below listed chanels</p>
-     <div class="form-group">
-           <select  class="form-log" name="current_chanels" id="current_chanels" style="width:50%">
+
+  <div class="form-row">
+    <div class="col">
+      <label for="current_chanels" class="col-form-label">Current chanel:</label>
+
+
+
+           <select   name="current_chanels" id="current_chanels" style="width:50%">
              <option disabled="" selected="" value="">chanel</option>
              {% for chanel in chanels_list %}
                  <option name="current_chanel" id="current_chanel" value="{{ chanel }}">{{ chanel }}</option>
@@ -108,11 +61,15 @@ input[type=submit]{
 
              {% endfor %}
          </select>
-     </div>
+      </div>
+    </div>
 
-     <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="form-row">
+      <div class="col">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+
  </form>
 
-
-</div>
 {% endblock %}
