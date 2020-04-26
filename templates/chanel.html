@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block main %}
-
 <style >
 
 </style>
@@ -13,11 +12,10 @@
 
 <!--<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script> -->
 
-<!--<script src="{{url_for('static', filename = 'usernamestorage.js')}}"> </script> -->
+<!--<script src="{{url_for('static', filename = 'usernamestorage.js')}}"> </script>-->
 
 
-
-<script src="{{url_for('static', filename = 'users.js')}}"> </script>
+<!--<script src="{{url_for('static', filename = 'users.js')}}"> </script> -->
 <script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
 <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
@@ -25,160 +23,116 @@
 
 
 
-<div class="container-fluid" style= "margin-top:30px">
+ <div class="container-flex flex-wrap" >
 
 
-<h4 id="welcometext" style="color:white"></h4>
+ <div class="d-flex justify-content-between bg-secondary">
 
+  <div class="my-flex-container-column">
 
-<div class="d-flex justify-content-between bg-secondary mb-3">
-
-
-  <div class="p-2 bg-info">
-
-<!--
-    <form action="/chanel/<chanel>" method="post">
-
- <p>create a new chanel</p>
-
-       <div class="form-group">
-       <label for="add_chanel">New chanel:</label>
-      <input type="text" class="form-control" id="add_chanel" name="add_chanel">
-      </div>
-
- <p>choose an existing chanel from the below listed chanels</p>
-      <div class="form-group">
-            <select  class="form-log" name="current_chanels" id="current_chanels">
-              <option disabled="" selected="" value="">chanel</option>
-              {% for chanel in chanels_list %}
-                  <option name="current_chanel" id="current_chanel" value="{{ chanel }}">{{ chanel }}</option>
-                {% else %}
-                 <option disabled="" selected="" value="">no current chanels. please create one.</option>
-
-              {% endfor %}
-          </select>
-      </div>
-
-      <input class="btn btn-primary" id="chanelsubmit" type="submit" value="create chanel"> </input>
-
-  </form>
-
-  -->
-<!-- new code above -->
-
-
-<div class="form-group">
- <div style="justify-content: center">
-    <form id="addchanel"  style = text-center >
-   <input  id="new_chanel" class="form-control" name="new_chanel" type="text" autocomplete="off"  placeholder="chanel" >
-      <input class="btn btn-primary"  id="chanelsubmit" type="submit" value="create chanel"> </input>
-   </form>
- </div>
-</div>
-
-
-
-
-<div  id="slackchanels">
-
-
-  <ul id="nav">
-        <li><a href="" class="nav-link" id="chanel" data-page="messages"></a></li>
-  </ul>
-
-
-<div class="vertical-menu">
-
-<div id ="chanels" >
-   {% for chanel in chanels_list %}
-
-        <a   href="{{ url_for('chanel', chanel=chanel, username=session.username)}} " class="nav-link" id="chanel" data-page="messages">
-          chanel:  {{ chanel }}
-        </a>
-
-       {% else %}
-     <li>No chanels</li>
-      {% endfor %}
-
- </div>
-</div>
-
-
-
-</div>
-    </div>
-
-
-<div class="col-8 justify-content-center">
-
-
-  <div class="p-2">
-
-<h3 id="userwelcome"> </h3>
-{% if session.username %}
-        <p id="demo"></p>
-         <h1 id="greeting"> welcome, {{session.username}} </h1>
-         <h3 id= current_chanel> chanel: {{session.chanel}}</h3>
-         <!-- this h3 is for practicing ajax -->
-{% endif %}
-     <div class="container">
-
-
-
-
-  <li id="newmessage"> Latest message: </li>
-
-
-<div  id="messagespage">
-  <li> </li>
-</div>
-
-
-
-<div class="form-group row" >
-   <textarea id="messages" class="form-control" name="chatroom" rows="10" width=100% flex style ="justify-content: center" readonly>
-
-
-      {% for message in messages_dict[session.chanel] %}
-          {{message}}
-       {% endfor %}
-
-
-    </textarea>
- </div>
-
-    <hr>
-
-<form id="messaging" >
-    <div class="form-group row" >
-     <textarea id="message"  class="form-control" autofocus autocomplete="off" type="text" placeholder="message" required></textarea>
-  </div>
-    <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
-</form>
-
+ <div class=" bg-info">
+   <div class=" form-row-add-chanel-form">
+     <form id="addchanel"  style = text-center >
+       <input  id="new_chanel" class="form-control" name="new_chanel" type="text" autocomplete="off"  placeholder="chanel" >
+       <input class="btn btn-primary"  id="chanelsubmit" type="submit" value="create chanel"> </input>
+     </form>
    </div>
-  </div>
-</div>
 
+       <div  id="slackchanels">
 
- <div class="p-2 bg-primary">
-   <div  id="namespace" style ="justify-content: center">
-     <h6>users</h6>
+ <!--
+   <div id="nav">
+         <p><a href="" class="nav-link" id="chanel" data-page="messages"></a> Current Chanel: {{session.chanel}}</p>
+   </div>
+ -->
+ <div class="vertical-menu">
 
-     <ul>
-    {% for user in users %}
-          <li>
-               {{ user }}
-        </li>
+  <div id ="chanels" >
+    {% for chanel in chanels_list %}
+
+         <a   href="{{ url_for('chanel', chanel=chanel, username=session.username )}} " class="nav-link" id="chanel" data-page="messages">
+           chanel:  {{ chanel }}
+         </a>
+
         {% else %}
-      <li>No users</li>
-     {% endfor %}
-     </ul>
-      <ul id="names"> </ul>
-      </div>
-     </div>
-   </div>
+      <li>No chanels</li>
+       {% endfor %}
   </div>
 
+       </div>
+      </div>
+      </div>
+   </div>
 
-{% endblock %}
+ <div class="p-2 my-flex-container-column-messages">
+
+      <div class="container-flex">
+
+        <div class="p-2">
+          <h3 id="userwelcome"> </h3>
+          {% if session.username %}
+           <p id="demo"></p>
+              {% endif %}
+
+ <div class="d-flex flex-row  justify-content-between flex-wrap  my-flex-container">
+
+             <div class="p-2 " id="hide-item"> </div>
+             <h4  class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </h4>
+
+             <div class="p-2 my-flex-item  align-self-center" id= "current_chanel"> chanel: {{session.chanel}}</div>
+
+ </div>
+
+   <!--<li id="newmessage"> Latest message: </li>
+
+ <div  id="messagespage">
+   <li> </li>
+ </div>
+
+ -->
+
+ <div class="form-group row" >
+    <textarea id="messages" class="form-control" name="chatroom" rows="8" width=100% flex style ="justify-content: center" readonly>
+
+       {% for message in messages_dict[session.chanel] %}
+           {{message}}
+        {% endfor %}
+
+     </textarea>
+  </div>
+
+     <hr>
+ <form id="messaging" >
+     <div class="form-group row" >
+      <textarea id="message"  class="form-control" autofocus autocomplete="off" type="text" placeholder="message" required></textarea>
+   </div>
+     <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
+ </form>
+
+    </div>
+   </div>
+ </div>
+
+ <div class="my-flex-container-column-users">
+
+  <div class=" bg-primary">
+    <div  id="namespace" style ="justify-content: center">
+      <h6>users</h6>
+
+      <ul>
+     {% for user in users %}
+           <li>
+                {{ user }}
+         </li>
+         {% else %}
+       <li>No users</li>
+      {% endfor %}
+      </ul>
+       <ul id="names"> </ul>
+       </div>
+      </div>
+    </div>
+   </div>
+ </div>
+
+  {% endblock %}

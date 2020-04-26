@@ -59,6 +59,8 @@ def index():
         session.get('username')
         print(f"this is the chanels {chanels_list}")
 
+
+
         return render_template("index.html", username=session["username"],  users=users, chanels_list=chanels_list, messages_dict=messages_dict, messages_list=messages_list)
 
 
@@ -352,7 +354,7 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
-
+"""
 if __name__ == "__main__":
  port = int(os.environ.get("PORT", 8080))
  socketio.run(app, host="0.0.0.0", port=port)
@@ -362,4 +364,3 @@ if __name__ == '__main__':
 
 
     socketio.run(app)
-"""

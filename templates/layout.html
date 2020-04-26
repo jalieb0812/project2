@@ -167,18 +167,56 @@ main.col{
 .my-flex-container-column-messages {
   border: 2px solid green;
   background-color: yellow;
-  height: 90%;
+  height: auto;
   width: 100%;
   margin-bottom: 20px;
 }
 
+
+@media (min-width: 376px){
 .my-flex-container-column-users {
   border: 2px solid green;
   background-color: DodgerBlue;
-  height: 350px;
-
+  height: auto;
+  width: 150px;
   margin-bottom: 20px;
 }
+}
+
+@media (max-width: 375px){
+.my-flex-container-column-users {
+  border: 2px solid green;
+  background-color: DodgerBlue;
+  height: auto;
+  width: 150px;
+  margin-bottom: 20px;
+  display: none;
+}
+}
+
+
+@media (min-width: 376px ){
+.my-flex-item {
+  background-color: lightgrey;
+  border: 1px dotted grey;
+  height: 48px;
+
+  }
+}
+
+@media (max-width: 375px ){
+.my-flex-item {
+  background-color: inherit;
+  border: 1px dotted grey;
+  height: auto;
+  width: 100px;
+  justify-content: center;
+  font-size: 15px;
+  margin-bottom: auto;
+  display: none;
+  }
+}
+
 
 .col-8 {
 background-color:yellow;
@@ -187,10 +225,26 @@ width: 100%;
 
 }
 
+@media (min-width: 376px)  {
 .form-row-add-chanel-form{
 
   width: 150px;
 }
+
+}
+
+@media (max-width: 375px)  {
+.form-row-add-chanel-form{
+
+  width: 100px;
+}
+
+#chanelsubmit{
+  width: 100px;
+}
+}
+
+
 
 #namespace {
 
@@ -202,9 +256,11 @@ width: 100%;
   justify-content: flex-end;
 }
 
-#greeting{
+@media (max-width: 376px){
+#hide_item{
 
-  justify-content: center;
+  display: none;
+}
 }
 
 textarea {
@@ -215,6 +271,7 @@ textarea {
   border-radius: 4px;
   background-color: #f8f8f8;
   width: 100%;
+  overflow-y: auto;
 
 }
 
@@ -229,12 +286,29 @@ input[type=submit]{
 }
 
 
-.vertical-menu {
-align: center;
-justify-content: center;
-width: 150px; /* Set a width if you like */
-height: 350px;
-overflow-y: auto;
+@media (min-width: 376px)  {
+
+  .vertical-menu {
+  align: center;
+  justify-content: center;
+  width: 150px; /* Set a width if you like */
+  height: 450px;
+  overflow-y: auto;
+  }
+
+}
+
+
+@media (max-width: 375px)  {
+
+  .vertical-menu {
+  align: center;
+  justify-content: center;
+  width: 100px; /* Set a width if you like */
+  height: 350px;
+  overflow-y: auto;
+  }
+
 }
 
 .vertical-menu a {
@@ -280,7 +354,7 @@ color: white;
 
 
 
-        <main class="container"  >
+        <main class="container-flex flex-wrap"  >
 
             {% block main %}{% endblock %}
         </main>
