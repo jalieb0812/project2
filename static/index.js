@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // When connected, configure form
     socket.on('connect', () => {
+      
 
       document.querySelector('#messaging').onsubmit = () => {
         const message = document.querySelector("#message").value
