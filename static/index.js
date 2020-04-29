@@ -6,11 +6,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Connect to websocket
-    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {transports: ['websocket']});
 
     // When connected, configure form
     socket.on('connect', () => {
-      
+
 
       document.querySelector('#messaging').onsubmit = () => {
         const message = document.querySelector("#message").value
@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         message.value = ''
         return false;
       };
+
+
         });
 
 
@@ -35,11 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('#messages').value += row + '\n';
 
       //scroll to botton of text area
-      document.querySelector("#messages").scrollTop = document.getElementById("messages").scrollHeight
+      document.querySelector("#messages").scrollTop = document.getElementById("messages").scrollHeight;
       message = document.querySelector("#message").value= ''
+      document.querySelector("#message").focus();
         return false;
 
-
       });
+
+
+
+
   return false;
     });
