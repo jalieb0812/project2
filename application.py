@@ -56,18 +56,19 @@ def index():
 
     if request.method == "GET":
 
+
         session.get('username')
         print(f"this is the chanels {chanels_list}")
 
 
 
-        return render_template("index.html", username=session["username"],  users=users, chanels_list=chanels_list, messages_dict=messages_dict, messages_list=messages_list)
+        return render_template("index.html", username=session["username"],  users=users, chanel=session['chanel'], chanels_list=chanels_list, messages_dict=messages_dict, messages_list=messages_list)
 
 
     if request.method == "POST":
         if request.form.get("add_chanel"):
 
-            chanel = request.form.get("add_chanel")
+            chanel = request.form.get("new_chanel")
 
             chanels_list.append(chanel)
 
@@ -86,6 +87,8 @@ def index():
             session["chanel"] = chanel
 
             print(f"this is messages_dict {messages_dict}: ")
+
+
 
         return  render_template('chanel.html', username=session["username"], chanel=chanel)
 
@@ -140,6 +143,10 @@ def sign_in():
         return render_template("sign_in.html")
 
 
+
+
+
+
 @app.route("/chanels", methods = ["GET", "POST"])
 def chanels():
 
@@ -152,6 +159,12 @@ def chanels():
     if request.form.get("new_chanel"):
 
         chanel = request.form.get("new_chanel")
+
+
+        for chanels in chanels_list:
+            if chanels == chanel:
+                flash("chanel name already taken. chose another chanel name")
+                return redirect('/chanels')
 
         chanels_list.append(chanel)
 
@@ -177,6 +190,8 @@ def chanels():
     return redirect(url_for('index', username=session["username"], chanel=chanel))
 
     #return redirect(url_for('index', messages_dict=messages_dict, *request.args))
+
+
 
 
 @app.route("/chanel/<chanel>", methods=["GET", "POST"])
@@ -217,6 +232,18 @@ def user():
     return jsonify({"success": True, "username": username})
 
 
+@socketio.on("submit chanel")
+def add_chanel(data):
+    #data is  { 'chanel': chanel} from socket.emit (submit chanel  { 'chanel': chanel})
+    chanel = data["chanel"]
+    chanels_list.append(chanel)
+
+    print(f"this is the  chanel in submit chanel: {chanel}")
+
+    emit("create chanel",  {'chanel': chanel},  broadcast=True)
+
+
+
 
 @socketio.on("submit message")
 def message(data):
@@ -244,18 +271,14 @@ def message(data):
 
     messages_list.append(full_message)
 
+
+    #if messages list has over 100 messages remove message index 0; Note: just to keep this smaller for debuging
+
+    if len(messages_list) > 100:
+        messages_list.pop([0])
+
     print(f"this is messages_list in submit message after append:  {messages_list}: \n")
 
-
-
-    """
-    messagelist.append(full_message)
-
-    messagedict["messages"]=messagelist
-
-    messages_dict["chanel"]=messagedict["messages"].append()
-
-    """
 
     print(f"this is messages_dict in submit message before addition:  {messages_dict}: \n")
 
@@ -263,6 +286,10 @@ def message(data):
 
         print(f"this is last element in messages_list: {messages_list[:-1]}")
         messages_dict[chanel].append(messages_list[-1])
+
+        """remove first message from list if chanel has over 100 messages"""
+        if len(messages_dict[chanel]) > 100:
+            messages_dict[chanel].pop(0)
     else:
         print("this else is happening")
         messages_dict[chanel] = [full_message]
@@ -312,7 +339,21 @@ def messages():
 
 
 
+@app.route("/chanel_verify", methods=["GET"])
+def chanel_verify():
 
+    chanel = request.args.get("new_chanel")
+
+    print(chanel)
+
+
+    for chanels in chanels_list:
+        if chanels == chanel:
+            return jsonify({"success": False})
+        else:
+            return jsonify({'success': True})
+
+    return jsonify({"success": True})
 
 
 @app.route("/createchanel", methods=["GET", "POST"])
@@ -341,7 +382,7 @@ def createchanel():
 
         """ add chanel to messages dict"""
         messages_dict[new_chanel]=[]
-        print(f"this is messages_dict {messages_dict}: ")
+        print(f"this is messages_dict in createchanel {messages_dict}: ")
 
         return jsonify({"success": True, "new_chanel": new_chanel, "chanles": chanels})
 

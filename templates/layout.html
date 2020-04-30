@@ -46,12 +46,11 @@ main .form-control
     display: inline-block;
 
 
-
 }
 
 main.form-group{
 
-  pad
+
 }
 
 main .form-log
@@ -74,14 +73,23 @@ main
     overflow-x: auto;
     /* scroll horizontally as needed */
 
-
     height: 100%;
+
+    padding-bottom: none;
+    display: block;
 
 
 
     /* center contents */
     text-align: center;
 
+}
+
+main.container{
+
+  padding: none;
+  margin: none;
+  gutter: none;
 }
 
 main.col{
@@ -104,7 +112,6 @@ main.col{
   margin-top: 10%;
 
 
-
 }
 
 #new_chanel{
@@ -114,20 +121,6 @@ main.col{
   display: inline-block;
 }
 
-
-
-
-
-
-}
-.container-flex{
-
-}
-
-.my-flex-container{
-
-
-}
 
 #messages {
 
@@ -149,7 +142,16 @@ main.col{
 }
 
 
+.container-flex {
 
+
+
+}
+
+div.p-2{
+
+
+}
 
 .container-fluid {
 
@@ -164,7 +166,7 @@ main.col{
 .my-flex-container-column {
   border: 2px solid green;
   height: 100%;
-  margin-bottom: 20px;
+
 }
 
 .my-flex-container-column-messages {
@@ -172,7 +174,10 @@ main.col{
   background-color: yellow;
   height: auto;
   width: 100%;
-  margin-bottom: 20px;
+
+  padding: none;
+
+
 }
 
 
@@ -182,7 +187,8 @@ main.col{
   background-color: DodgerBlue;
   height: auto;
   width: 150px;
-  margin-bottom: 20px;
+  padding: none;
+
 }
 }
 
@@ -192,8 +198,30 @@ main.col{
   background-color: DodgerBlue;
   height: auto;
   width: 150px;
-  margin-bottom: 20px;
+
   display: none;
+}
+}
+
+@media (min-width: 376px){
+.my-flex-container-column-chanels {
+  border: 2px solid green;
+  background-color: DodgerBlue;
+  height: auto;
+  width: 150px;
+
+}
+}
+
+@media (max-width: 375px){
+.my-flex-container-column-chanels {
+  border: 2px solid green;
+  background-color: DodgerBlue;
+  height: auto;
+  width: 150px;
+  padding: none;
+
+
 }
 }
 
@@ -268,7 +296,7 @@ width: 100%;
 
 textarea {
   justify-content: center;
-  padding: 12px 20px;
+
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
@@ -308,7 +336,7 @@ input[type=submit]{
   align: center;
   justify-content: center;
   width: 100px; /* Set a width if you like */
-  height: 350px;
+  height: auto;
   overflow-y: auto;
   }
 
@@ -355,12 +383,29 @@ color: white;
             </div>
         </nav>
 
+        <header>
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
 
+                {% for message in messages %}
 
-        <main class="container-flex flex-wrap"  >
+            <div class="alert alert-primary alert-dismissible fade show border text-center" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+
+            </div>
+              {% endfor %}
+              {% endif %}
+              {% endwith %}
+        </header>
+
+        <main >
 
             {% block main %}{% endblock %}
         </main>
+
 
         <footer class="small text-center text-muted justify-content-flex-e">
             Developed by Jordan Lieber.

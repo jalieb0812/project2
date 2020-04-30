@@ -17,11 +17,12 @@
 
 
 <!--<script src="{{url_for('static', filename = 'users.js')}}"> </script> -->
-<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
-<script src="{{url_for('static', filename = 'index.js')}}"> </script>
+<!--<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>-->
+
 
  <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
-
+<!-- <script src="{{url_for('static', filename = 'chanelslist.js')}}"> </script>-->
+ <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
 
 <div class="container-flex flex-wrap" >
@@ -44,14 +45,17 @@
 <!--
   <div id="nav">
         <p><a href="" class="nav-link" id="chanel" data-page="messages"></a> Current Chanel: {{session.chanel}}</p>
-  </div>
+  </div >
 -->
-<div class="vertical-menu">
 
- <div id ="chanels" >
+<div  class="vertical-menu">
+
+
+ <div id="chanels">
    {% for chanel in chanels_list %}
 
-        <a   href="{{ url_for('chanel', chanel=chanel, username=session.username )}} " class="nav-link" id="chanel" data-page="messages">
+
+      <a   href="{{ url_for('chanel', chanel=chanel, username=session.username )}} " class="nav-link" id="chanel" data-page="messages">
           chanel:  {{ chanel }}
         </a>
 
@@ -68,6 +72,7 @@
 <div class="p-2 my-flex-container-column-messages">
 
      <div class="container-flex">
+
 
        <div class="p-2">
          <h3 id="userwelcome"> </h3>
@@ -93,7 +98,7 @@
 -->
 
 <div class="form-group row" >
-   <textarea id="messages" class="form-control" name="chatroom" rows="8" width=100% flex style ="justify-content: center" readonly>
+   <textarea id="messages" class="form-control" name="chatroom" rows="10" width=100% flex style ="justify-content: center" readonly>
 
       {% for message in messages_dict[session.chanel] %}
           {{message}}
@@ -105,7 +110,7 @@
     <hr>
 <form id="messaging" >
     <div class="form-group row" >
-     <textarea id="message"  class="form-control" autofocus autocomplete="off" type="text" placeholder="message" required></textarea>
+     <textarea id="message"  class="form-control" autofocus="autofocus" autocomplete="off" type="text" placeholder="message" required></textarea>
   </div>
     <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
 </form>

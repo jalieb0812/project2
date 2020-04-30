@@ -16,10 +16,12 @@
 
 
 <!--<script src="{{url_for('static', filename = 'users.js')}}"> </script> -->
-<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
-<script src="{{url_for('static', filename = 'index.js')}}"> </script>
+<!--<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>-->
 
  <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
+ <script src="{{url_for('static', filename = 'index.js')}}"> </script>
+<!-- <script src="{{url_for('static', filename = 'chanelslist.js')}}"> </script>-->
+
 
 
 
@@ -47,7 +49,8 @@
  -->
  <div class="vertical-menu">
 
-  <div id ="chanels" >
+
+  <div id="chanels">
     {% for chanel in chanels_list %}
 
          <a   href="{{ url_for('chanel', chanel=chanel, username=session.username )}} " class="nav-link" id="chanel" data-page="messages">
@@ -134,5 +137,7 @@
     </div>
    </div>
  </div>
+
+
 
   {% endblock %}
