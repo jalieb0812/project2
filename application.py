@@ -69,6 +69,11 @@ def index():
         if request.form.get("add_chanel"):
 
             chanel = request.form.get("new_chanel")
+            for chanels in chanels_list:
+                if chanels == chanel:
+                    flash("chanel name already taken. chose another chanel name")
+                    return redirect('/chanels')
+
 
             chanels_list.append(chanel)
 
@@ -232,10 +237,13 @@ def user():
     return jsonify({"success": True, "username": username})
 
 
+
 @socketio.on("submit chanel")
 def add_chanel(data):
     #data is  { 'chanel': chanel} from socket.emit (submit chanel  { 'chanel': chanel})
     chanel = data["chanel"]
+
+
     chanels_list.append(chanel)
 
     print(f"this is the  chanel in submit chanel: {chanel}")
@@ -309,51 +317,61 @@ def message(data):
 
 
 """ route for sending the stored messages """
+"""
 @app.route("/messages", methods = ["GET"])
 def messages():
 
-    if len(chanels_list) > 0:
-        chanel = request.form.get("chanel_select")
-        #chanel = chanels_list[len(chanels_list) - 1]
+    if request.method == "GET":
 
-        for key in messages_dict:
-            if key == session["chanel"]:
-                old_chats = messages_dict[key]
-
-        print(f"here is the old chats: {old_chats}")
-
-        print(messages_dict)
-
-    #    print(f"this is messages list: {messages_list}")
+        if len(chanels_list) > 0 and len(messages_list) > 0:
+            chanel = session['chanel']
 
 
+            for key in messages_dict:
+                if key == session["chanel"]:
+                    old_chats = messages_dict[key]
 
-        return str(old_chats)
+                    print(f"here is the old chats: {old_chats}")
 
+            print(messages_dict)
 
-    else:
-
-        return redirect('/')
+        #    print(f"this is messages list: {messages_list}")
 
 
 
+            return str(old_chats)
 
 
-@app.route("/chanel_verify", methods=["GET"])
+        else:
+
+            return str("no messages")
+"""
+
+
+
+
+@app.route("/chanel_verify", methods=["POST"])
 def chanel_verify():
 
-    chanel = request.args.get("new_chanel")
+    chanel = request.form.get("new_chanel")
 
-    print(chanel)
+    if len(chanels_list) > 0:
 
 
-    for chanels in chanels_list:
-        if chanels == chanel:
-            return jsonify({"success": False})
-        else:
-            return jsonify({'success': True})
+        print(f"this is chanel in chanel verify: {chanel}")
 
-    return jsonify({"success": True})
+        for chanels in chanels_list:
+            if chanels == chanel:
+                return jsonify({"validate": False})
+            else:
+                chanels_list.append(chanel)
+                return jsonify({'validate': True})
+
+    else:
+        chanels_list.append(chanel)
+        return jsonify({'validate': True})
+
+
 
 
 @app.route("/createchanel", methods=["GET", "POST"])
@@ -395,6 +413,8 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
+
+
 """
 if __name__ == "__main__":
  port = int(os.environ.get("PORT", 8080))

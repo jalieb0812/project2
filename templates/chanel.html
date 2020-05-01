@@ -23,7 +23,7 @@
 <!-- <script src="{{url_for('static', filename = 'chanelslist.js')}}"> </script>-->
 
 
-
+<script src="{{url_for('static', filename = 'chanelverify.js')}}"> </script>
 
  <div class="container-flex flex-wrap" >
 
@@ -36,7 +36,7 @@
    <div class=" form-row-add-chanel-form">
      <form id="addchanel"  style = text-center >
        <input  id="new_chanel" class="form-control" name="new_chanel" type="text" autocomplete="off"  placeholder="chanel" >
-       <input class="btn btn-primary"  id="chanelsubmit" type="submit" value="create chanel"> </input>
+       <input class="btn btn-primary" onclick="chanel_verify()"  id="chanelsubmit" type="submit" value="create chanel"> </input>
      </form>
    </div>
 
@@ -139,5 +139,59 @@
  </div>
 
 
+ <script type="text/javascript">
+
+
+   function chanel_verify() {
+
+       document.querySelector('#addchanel').onsubmit = () => {
+
+         const request = new XMLHttpRequest();
+
+         const new_chanel = document.querySelector("#new_chanel").value;
+
+         request.open('POST', '/chanel_verify', true);
+
+         request.onload = () => {
+
+           const data = JSON.parse(request.responseText);
+
+           if (data.validate == false){
+             //location.reload(true);
+             window.alert("chanel name already exists, choose a new chanel name");
+             return false;
+           }
+
+           else {
+             alert("chanel created")
+             document.getElementById("#addchanel").submit();
+           }
+
+
+         }
+
+         const data = new FormData();
+         data.append('new_chanel', new_chanel)
+         request.send(data);
+         //return false;
+
+
+           //console.log(JSON.parse(request.responseText))
+
+         //  const chanel = document.querySelector("#new_chanel").value;
+
+       };
+     };
+
+
+       //const data = new FormData();
+     //  data.append('chanel', chanel)
+     //  request.send(data);
+     //  return false;
+
+     //  };
+
+
+   </script>
 
   {% endblock %}

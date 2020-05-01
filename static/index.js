@@ -9,6 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {transports: ['websocket']});
   //
 
+  ///code for making chanel form not usable unless typing inside.
+
+    //default submit is disabled
+    document.querySelector('#chanelsubmit').disabled = true;
+    //enable chanel submit oly if text in the field
+     document.querySelector('#new_chanel').onkeyup = () => {
+
+     if (document.querySelector('#new_chanel').value.length > 0)
+          document.querySelector('#chanelsubmit').disabled = false;
+      else
+          document.querySelector('#chanelsubmit').disabled = true;
+
+        };
     // When connected, configure form
     socket.on('connect', () => {
 
@@ -62,16 +75,20 @@ document.addEventListener('DOMContentLoaded', () => {
       socket.on("create chanel", data => {
 
 
+
         row = `chanelhere: ${data.chanel}`;
-        const li = document.createElement('li');
         const a = document.createElement('a');
-        a.setAttribute("class", "nav-link" )
+        a.setAttribute("class", "nav-link" );
+        a.setAttribute('id', "chanel");
+        a.setAttribute('data-page', "messages")
         a.setAttribute("href", `/chanel/${data.chanel}`  )
-        li.innerHTML = `chanelhere: ${data.chanel}`;
-        a.innerHTML = `chanelhere: ${data.chanel}`;
+        a.innerHTML = `chanel: ${data.chanel}`;
         document.querySelector('#chanels').append(a)
 
-      //  document.querySelector('#chanels').append(li) ;
+        //relock chanel submit
+        document.querySelector('#chanelsubmit').disabled = true;
+
+    //  document.querySelector('#chanels').append(li) ;
 
 });
 
