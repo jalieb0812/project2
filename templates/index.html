@@ -70,31 +70,25 @@
 
 <div class="p-2 my-flex-container-column-messages">
 
-     <div class="container-flex">
+  <div class="container-flex">
 
+      <div class="p-2">
 
-       <div class="p-2">
          <h3 id="userwelcome"> </h3>
          {% if session.username %}
           <p id="demo"></p>
              {% endif %}
 
-<div class="d-flex flex-row  justify-content-between flex-wrap  my-flex-container">
+          <div class="d-flex flex-row  justify-content-between flex-wrap  my-flex-container">
 
             <div class="p-2" id="hide_item"> </div>
             <div  class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </div>
 
             <div class="p-2 my-flex-item  align-self-center" id= "current_chanel"> chanel: {{session.chanel}}</div>
 
-</div>
+          </div>
 
-  <!--<li id="newmessage"> Latest message: </li>
 
-<div  id="messagespage">
-  <li> </li>
-</div>
-
--->
 
 <div  class="form-group row" >
 
@@ -115,6 +109,8 @@
   </div>
     <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
 </form>
+
+
 
    </div>
   </div>

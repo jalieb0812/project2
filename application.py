@@ -251,6 +251,35 @@ def add_chanel(data):
     emit("create chanel",  {'chanel': chanel},  broadcast=True)
 
 
+""" route/code for ensuring no two channels have the same name"""
+@app.route("/chanel_verify", methods=["POST"])
+def chanel_verify():
+
+    chanel = request.form.get("new_chanel")
+
+    if len(chanels_list) > 0:
+
+
+        print(f"this is chanel in chanel verify: {chanel}")
+
+        for chanels in chanels_list:
+
+
+            if chanel == chanels:
+
+                print (f" this is chanels: {chanels}")
+                print (f" this is chanel: {chanel}")
+                print (f" this is chanels_list: {chanels_list}")
+
+                return jsonify({"validate": False})
+
+        chanels_list.append(chanel)
+        return jsonify({'validate': True})
+
+    else:
+        chanels_list.append(chanel)
+        return jsonify({'validate': True})
+
 
 
 @socketio.on("submit message")
@@ -350,26 +379,6 @@ def messages():
 
 
 
-@app.route("/chanel_verify", methods=["POST"])
-def chanel_verify():
-
-    chanel = request.form.get("new_chanel")
-
-    if len(chanels_list) > 0:
-
-
-        print(f"this is chanel in chanel verify: {chanel}")
-
-        for chanels in chanels_list:
-            if chanels == chanel:
-                return jsonify({"validate": False})
-            else:
-                chanels_list.append(chanel)
-                return jsonify({'validate': True})
-
-    else:
-        chanels_list.append(chanel)
-        return jsonify({'validate': True})
 
 
 
