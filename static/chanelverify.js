@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const request = new XMLHttpRequest();
 
-                const new_chanel = document.querySelector("#new_chanel").value;
+                const new_channel = document.querySelector("#new_chanel").value;
 
                 request.open('POST', '/chanel_verify', true);
 
@@ -19,12 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                   if (data.validate == false){
                     //location.reload(true);
-                    window.alert("chanel name already exists, choose a new chanel name");
+                    window.alert(`chanel name ${new_channel} already exists, choose a new chanel name`);
                     return false;
                   }
 
                   else {
-                    alert("chanel created")
+
                     document.getElementById("#addchanel").submit();
                   }
 

@@ -295,16 +295,20 @@ def chanel_verify():
 
 
 """ route for deleting chanels"""
-@app.route("/delete_channel", methods=["POST"])
-def delete_channel():
+@socketio.on("delete_channel")
+def delete_channel(data):
+    channel = data["channel"]
 
-    channel = request.form.get("delete_channel")
+    print(f"this is the  channel to delete: {channel}")
 
-    channel=data["channel"]
+    for item in chanels_list:
 
-    chanels_list.remove["channel"]
+        if item == channel:
+            chanels_list.remove(item)
 
-    return jsonify({'success': True})
+    emit("channel_deleted", {'channel': channel}, broadcast=True)
+
+    #return jsonify({'success': True})
 
 
 

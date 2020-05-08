@@ -24,7 +24,7 @@
 
 
 <script src="{{url_for('static', filename = 'chanelverify.js')}}"> </script>
-<script src="{{url_for('static', filename = 'delete_channel.js')}}"> </script>
+
 
 <script type="text/javascript">
 
@@ -34,7 +34,7 @@
 
       localStorage.setItem('current_channel', '{{session['chanel']}}')
       let channel = localStorage.getItem('current_channel');
-      document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
+    //  document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
 
 
 
@@ -96,15 +96,20 @@
 
  <div class="d-flex flex-row  justify-content-between flex-wrap  my-flex-container">
 
-             <p id="channel_check"> </p>
+          <!--   <p id="channel_check"> </p> -->
 
-             <form id="channel_delete" onsubmit="delete_channel()">
+             <form id="channel_delete"">
 
-               <input type="text" id="delete_channel" class="form-control" name="new_chanel"  autocomplete="off" placeholder="channel"name="delete_channel" >
-
-             <button  type="submit" name="delete_channel" onclick="delete_channel()">Delete Channel</button>
-
+               <div class="form-row">
+                 <div class="col">
+                       <input type="text" id="deleted_channel" class="form-control" name="new_chanel"  autocomplete="off" placeholder="channel"name="delete_channel" >
+                 </div>
+                 <div class="col">
+                   <button  type="submit"" >Delete Channel</button>
+                 </div>
+                </div>
               </form>
+
              <h4  class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </h4>
 
              <div class="p-2 my-flex-item  align-self-center" id= "current_chanel"> chanel: {{session.chanel}}</div>
@@ -120,7 +125,7 @@
  -->
 
  <div class="form-group row" >
-    <textarea id="messages" class="form-control" name="chatroom" rows="20" width=100% flex style ="justify-content: center" readonly>
+    <textarea id="messages" class="form-control" name="chatroom" rows="15" width=100% flex style ="justify-content: center" readonly>
 
        {% for message in messages_dict[session.chanel] %}
            {{message}}
@@ -173,7 +178,7 @@
 
          const request = new XMLHttpRequest();
 
-         const new_chanel = document.querySelector("#new_chanel").value;
+         const channel = document.querySelector("#new_chanel").value;
 
          request.open('POST', '/chanel_verify', true);
 
@@ -183,7 +188,7 @@
 
            if (data.validate == false){
              //location.reload(true);
-             window.alert("chanel name already exists, choose a new chanel name");
+             window.alert(`chanel name ${channel} already exists, choose a new chanel name`);
              return false;
            }
 
@@ -196,7 +201,7 @@
          }
 
          const data = new FormData();
-         data.append('new_chanel', new_chanel)
+         data.append('new_chanel', channel)
          request.send(data);
          //return false;
 
@@ -208,33 +213,6 @@
        };
      };
 
-     function delete_channel() {
-
-       document.querySelector('#delete_channel').onclick = () => {
-
-         const request = new XMLHttpRequest();
-
-         const channel = localStorage.getItem('current_channel');
-
-         request.open('POST', '/delete_channel', true);
-
-         request.onload = () => {
-
-           if (data.success == true) {
-
-             window.alert("channel deleted");
-             window.location.assign("chanels.html");
-
-           };
-
-         };
-
-         const data = new FormData();
-         data.append("delete_channel", channel)
-         request.send(data)
-
-       };
-     };
 
 
 

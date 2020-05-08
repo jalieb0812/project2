@@ -5,6 +5,16 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+
+  if (window.innerWidth > 376){
+    document.querySelector("#messages").setAttribute("rows", "15")
+  }
+
+  if (screen.innerWidth < 376) {
+    document.querySelector("#messages").setAttribute("rows", "30")
+
+  }
+
     // Connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {transports: ['websocket']});
   //
@@ -84,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         a.setAttribute("href", `/chanel/${data.chanel}`  )
         a.innerHTML = `chanel: ${data.chanel}`;
         document.querySelector('#chanels').append(a)
+        alert(`channel ${data.channel} created`)
 
         //relock chanel submit
         document.querySelector('#chanelsubmit').disabled = true;
@@ -92,4 +103,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+
+
+  socket.on('connect', () => {
+    document.querySelector("#channel_delete").onsubmit = () => {
+      const channel = document.querySelector('#deleted_channel').value
+
+      socket.emit("delete_channel", { 'channel': channel});
+
+      document.querySelector('#new_chanel').value = '';
+      return false;
+
+     };
+
   });
+
+  socket.on("channel_deleted", data => {
+
+
+    var list = document.getElementById("chanels");
+    list.removeChild(list.childNodes[data.channel]);
+    alert(`channel: ${data.channel} deleted`)
+    document.querySelector('#deleted_channel').value = '';
+      return false;
+
+
+//  document.querySelector('#chanels').append(li) ;
+
+});
+
+});
