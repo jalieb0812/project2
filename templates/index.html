@@ -25,14 +25,33 @@
  <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
 
+
+ <script type="text/javascript">
+
+   document.addEventListener('DOMContentLoaded', () => {
+
+
+     const queryString = window.location.search;
+     const urlParams = new URLSearchParams(queryString);
+     const current_channel = urlParams.get('chanel')
+
+     localStorage.setItem('current_channel', current_channel)
+     let channel = localStorage.getItem('current_channel');
+     document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
+
+       });
+
+ </script>
+
 <div class="container-flex flex-wrap" >
+
 
 
 <div class="d-flex justify-content-between bg-secondary">
 
- <div class="my-flex-container-column">
+ <div class="my-flex-container-column-chanels">
 
-<div class=" bg-info">
+<div >
   <div class=" form-row-add-chanel-form">
     <form id="addchanel" onsubmit="chanel_verify()" style = text-center>
       <input  id="new_chanel" class="form-control" name="new_chanel"  type="text" autocomplete="off"  placeholder="chanel" >
@@ -54,7 +73,7 @@
  <div id="chanels">
    {% for chanel in chanels_list %}
 
-      <a href="{{ url_for('chanel', chanel=chanel, username=session.username )}} "  data-chanel={{chanel}} class="the_channels" id="chanel" data-page="messages">
+      <a href="{{ url_for('chanel', chanel=chanel, channel=chanel, username=session.username )}} "  data-chanel={{chanel}} class="the_channels" id="chanel" data-page="messages">
           chanel:  {{ chanel }}
         </a>
 
@@ -81,7 +100,10 @@
 
           <div class="d-flex flex-row  justify-content-between flex-wrap  my-flex-container">
 
-            <div class="p-2" id="hide_item"> </div>
+            <p id="channel_check"> </p>
+
+            <button id="delete_channel" type="button" name="delete_channel" onclick="delete_channel()">Delete Channel</button>
+
             <div  class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </div>
 
             <div class="p-2 my-flex-item  align-self-center" id= "current_chanel"> chanel: {{session.chanel}}</div>
@@ -93,7 +115,7 @@
 <div  class="form-group row" >
 
 
-   <textarea id="messages" class="form-control" name="chatroom" rows="10" width=100% flex style ="justify-content: center" readonly>
+   <textarea id="messages" class="form-control" name="chatroom" rows="20" width=100% flex style ="justify-content: center" readonly>
 
       {% for message in messages_dict[session.chanel] %}
           {{message}}
@@ -162,12 +184,11 @@
           }
 
           else {
-            alert("chanel created")
+            alert(`chanel ${new_chanel} created`)
             return false;
             //location.reload(true)
 
           }
-
 
         }
 
@@ -177,51 +198,33 @@
         //return false;
 
 
-          //console.log(JSON.parse(request.responseText))
-
-        //  const chanel = document.querySelector("#new_chanel").value;
-
-
       };
     };
 
+function delete_channel() {
 
-      //const data = new FormData();
-    //  data.append('chanel', chanel)
-    //  request.send(data);
-    //  return false;
+  document.querySelector('#delete_channel').onclick = () => {
 
-    //  };
+    const request = new XMLHttpRequest();
+
+
+
+    request.open('POST', '/chanel_verify', true);
+
+    request.onload = () => {
+
+    }
+
+
+  }
+
+}
+
 
 
   </script>
 
 
-  <!--
-$(function(){
-    $('form').on('submit', function (validate){
-        validate.preventDefault();
-        var username = $("#username").val();
-        $.get("/check?username=" + username, function(validation) {
-            if (validation == false){
-                alert("username not available. please choose another username");
-                document.getElementById("registration").submit();
-
-            }
-                else
-            {
-                  alert("You successfully registered!");
-                  (document).getElementById("registration").submit();
-            }
-        });
-
-
-    });
-
-
-});
-
--->
 
 
 {% endblock %}

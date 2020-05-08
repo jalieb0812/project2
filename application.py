@@ -5,11 +5,15 @@ from flask import Flask, flash, jsonify, redirect, render_template, request, ses
 from flask_session import Session
 from flask_socketio import SocketIO, emit
 from loginrequired import login_required
+from werkzeug.utils import secure_filename
 
 
+UPLOAD_FOLDER = '/path/to/the/uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['ENV'] = 'development'
 
 """
@@ -48,7 +52,11 @@ messages_dict={}
 
 messages_list=[]
 
+""" function to secure a filename before storing it directly on the filesystem."""
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/" , methods=["GET", "POST"])
 @login_required
@@ -95,7 +103,7 @@ def index():
 
 
 
-        return  render_template('chanel.html', username=session["username"], chanel=chanel)
+        return  redirect (url_for('chanel', username=session["username"], chanel=session["chanel"]))
 
 
             #print(f"these are the messages: {messages_dict}")
@@ -213,6 +221,8 @@ def chanel(chanel):
         return redirect("/")
 
 
+
+
 """ route for generating username"""
 
 @app.route("/username", methods=["POST"])
@@ -259,11 +269,9 @@ def chanel_verify():
 
     if len(chanels_list) > 0:
 
-
         print(f"this is chanel in chanel verify: {chanel}")
 
         for chanels in chanels_list:
-
 
             if chanel == chanels:
 
@@ -280,6 +288,7 @@ def chanel_verify():
         chanels_list.append(chanel)
         return jsonify({'validate': True})
 
+""" route for deleting chanels"""
 
 
 @socketio.on("submit message")

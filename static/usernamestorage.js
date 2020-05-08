@@ -9,30 +9,8 @@
 ///    })
 
 // local storage use to Remember user
-// set username to nothing
-if (!localStorage.getItem('user'))
-
-document.addEventListener('DOMContentLoaded', () => {
-// if first sign in; then welcome sign happens
-    document.querySelector('#welcometext').innerHTML = "Welcome to JO Slack app. To begin, enter your username";
-})
-
-/// if already signed in previously
-if(localStorage.getItem('user'))
-  document.addEventListener('DOMContentLoaded', () => {
-    let user = localStorage.getItem('user');
-      document.querySelector('#welcometext').innerHTML = `Hi ${user}`;
-
-      ///remove username form is signed in previously
-        var usernameform = document.querySelector('#username');
-         usernameform.remove();
-
-    });
 
 
-///run this code only if person has not signed in
-if(!localStorage.getItem('user'));
-/// function to change the greeting h1
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelector("#username").onsubmit = () => {
 

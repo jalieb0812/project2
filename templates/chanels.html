@@ -10,7 +10,7 @@
 
 
 <!--<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script> -->
-<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script>
+<!--<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script> -->
 <!--<script src="{{url_for('static', filename = 'usernamestorage.js')}}"> </script> -->
 
 <!--
@@ -24,7 +24,18 @@
  <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
 
 
+ <script type="text/javascript">
 
+   if(localStorage.getItem('user'))
+     document.addEventListener('DOMContentLoaded', () => {
+       let user = localStorage.getItem('user');
+         document.querySelector('#channelwelcometext').innerHTML = `Hi ${user}`;
+
+         return false;
+
+       });
+
+ </script>
 
 
 <div class="container" style="margin-top:50px">
@@ -32,8 +43,8 @@
 
 
 
-
-<h4 id="chanelwelcometext" style="color:white">Choose an exisitng chanel or create a new chanel </h4>
+<h4 id= "channelwelcometext"></h4>
+<h4 style="color:white">Choose an exisitng chanel or create a new chanel </h4>
 
 
 
