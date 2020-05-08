@@ -24,19 +24,19 @@
 
 
 <script src="{{url_for('static', filename = 'chanelverify.js')}}"> </script>
+<script src="{{url_for('static', filename = 'delete_channel.js')}}"> </script>
 
 <script type="text/javascript">
 
   document.addEventListener('DOMContentLoaded', () => {
 
+    if ('{{session['chanel']}}')
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const current_channel = urlParams.get('channel')
+      localStorage.setItem('current_channel', '{{session['chanel']}}')
+      let channel = localStorage.getItem('current_channel');
+      document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
 
-    localStorage.setItem('current_channel', current_channel)
-    let channel = localStorage.getItem('current_channel');
-    document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
+
 
       });
 
@@ -70,7 +70,7 @@
   <div id="chanels">
     {% for chanel in chanels_list %}
 
-         <a   href="{{ url_for('chanel', chanel=chanel, username=session.username )}} " data-chanel={{chanel}} class="nav-link" id="chanel" data-page="messages">
+         <a   href="{{ url_for('chanel', chanel=chanel, channel=chanel, username=session.username )}} " data-chanel={{chanel}} class="nav-link" id="chanel" data-page="messages">
            chanel:  {{ chanel }}
          </a>
 
@@ -98,7 +98,13 @@
 
              <p id="channel_check"> </p>
 
-             <button id="delete_channel" type="button" name="delete_channel" onclick="delete_channel()">Delete Channel</button>
+             <form id="channel_delete" onsubmit="delete_channel()">
+
+               <input type="text" id="delete_channel" class="form-control" name="new_chanel"  autocomplete="off" placeholder="channel"name="delete_channel" >
+
+             <button  type="submit" name="delete_channel" onclick="delete_channel()">Delete Channel</button>
+
+              </form>
              <h4  class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </h4>
 
              <div class="p-2 my-flex-item  align-self-center" id= "current_chanel"> chanel: {{session.chanel}}</div>
@@ -202,13 +208,34 @@
        };
      };
 
+     function delete_channel() {
 
-       //const data = new FormData();
-     //  data.append('chanel', chanel)
-     //  request.send(data);
-     //  return false;
+       document.querySelector('#delete_channel').onclick = () => {
 
-     //  };
+         const request = new XMLHttpRequest();
+
+         const channel = localStorage.getItem('current_channel');
+
+         request.open('POST', '/delete_channel', true);
+
+         request.onload = () => {
+
+           if (data.success == true) {
+
+             window.alert("channel deleted");
+             window.location.assign("chanels.html");
+
+           };
+
+         };
+
+         const data = new FormData();
+         data.append("delete_channel", channel)
+         request.send(data)
+
+       };
+     };
+
 
 
    </script>

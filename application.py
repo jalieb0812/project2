@@ -66,7 +66,10 @@ def index():
 
 
         session.get('username')
+        session.get('chanel')
         print(f"this is the chanels {chanels_list}")
+        print(f"this is session chanels {chanels_list}")
+
 
 
 
@@ -168,39 +171,44 @@ def chanels():
         return render_template ("chanels.html", chanels_list = chanels_list)
 
 
-
-    if request.form.get("new_chanel"):
-
-        chanel = request.form.get("new_chanel")
+    if request.method == "POST":
 
 
-        for chanels in chanels_list:
-            if chanels == chanel:
-                flash("chanel name already taken. chose another chanel name")
-                return redirect('/chanels')
 
-        chanels_list.append(chanel)
+        if request.form.get("new_chanel"):
 
-        session["chanel"] = chanel
-
-        """ add chanel to messages dict """
-
-        #messages_dict[new_chanel]= []
-
-        print(f"this is messages_dict {messages_dict}: ")
-
-    if request.form.get("current_chanels"):
-
-        chanel = request.form.get("current_chanels")
-
-        session["chanel"] = chanel
-
-        print(f"this is messages_dict {messages_dict}: ")
+            chanel = request.form.get("new_chanel")
 
 
-    #session["messagesdict"]=messages_dict
+            for chanels in chanels_list:
+                if chanels == chanel:
+                    flash("chanel name already taken. chose another chanel name")
+                    return redirect('/chanels')
 
-    return redirect(url_for('index', username=session["username"], chanel=chanel))
+            chanels_list.append(chanel)
+
+            session["chanel"] = chanel
+
+            """ add chanel to messages dict """
+
+            #messages_dict[new_chanel]= []
+
+            print(f"this is messages_dict {messages_dict}: ")
+
+            return redirect(url_for('index', username=session["username"], chanel=chanel))
+
+        if request.form.get("current_chanels"):
+
+            chanel = request.form.get("current_chanels")
+
+            session["chanel"] = chanel
+
+            print(f"this is messages_dict {messages_dict}: ")
+
+
+        #session["messagesdict"]=messages_dict
+
+            return redirect(url_for('index', username=session["username"], chanel=chanel))
 
     #return redirect(url_for('index', messages_dict=messages_dict, *request.args))
 
@@ -275,9 +283,6 @@ def chanel_verify():
 
             if chanel == chanels:
 
-                print (f" this is chanels: {chanels}")
-                print (f" this is chanel: {chanel}")
-                print (f" this is chanels_list: {chanels_list}")
 
                 return jsonify({"validate": False})
 
@@ -288,7 +293,20 @@ def chanel_verify():
         chanels_list.append(chanel)
         return jsonify({'validate': True})
 
+
 """ route for deleting chanels"""
+@app.route("/delete_channel", methods=["POST"])
+def delete_channel():
+
+    channel = request.form.get("delete_channel")
+
+    channel=data["channel"]
+
+    chanels_list.remove["channel"]
+
+    return jsonify({'success': True})
+
+
 
 
 @socketio.on("submit message")
