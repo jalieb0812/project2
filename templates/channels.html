@@ -16,10 +16,10 @@
 <!--
 
 <script src="{{url_for('static', filename = 'users.js')}}"> </script>
-<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>
+<script src="{{url_for('static', filename = 'channels.js')}}"> </script>
 <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
-<script src="{{url_for('static', filename = 'chanelverify.js')}}"> </script>
+<script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>
 
  <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
 
@@ -44,38 +44,38 @@
 
 
 <h4 id= "channelwelcometext"></h4>
-<h4 style="color:white">Choose an exisitng chanel or create a new chanel </h4>
+<h4 style="color:white">Choose an exisitng channel or create a new channel </h4>
 
 
 
-   <form id="create_chanel" action="/chanels" method="post">
+   <form id="create_channel" action="/channels" method="post">
 
 
 
-<p>create a new chanel</p>
+<p>create a new channel</p>
 
   <div class="form-row">
       <div class="col">
-  <label for="new_chanel" class="col-form-label">New chanel:</label>
+  <label for="new_channel" class="col-form-label">New channel:</label>
 
-     <input type="text" class="form-control" id="new_chanel" name="new_chanel">
+     <input type="text" class="form-control" id="new_channel" name="new_channel">
      </div>
 
   </div>
-<p>choose an existing chanel from the below listed chanels</p>
+<p>choose an existing channel from the below listed channels</p>
 
   <div class="form-row">
     <div class="col">
-      <label for="current_chanels" class="col-form-label">Current chanel:</label>
+      <label for="current_channels" class="col-form-label">Current channel:</label>
 
 
 
-           <select   name="current_chanels" id="current_chanels" style="width:50%">
-             <option disabled="" selected="" value="">chanel</option>
-             {% for chanel in chanels_list %}
-                 <option name="current_chanel" id="current_chanel" value="{{ chanel }}">{{ chanel }}</option>
+           <select   name="current_channels" id="current_channels" style="width:50%">
+             <option disabled="" selected="" value="">channel</option>
+             {% for channel in channels_list %}
+                 <option name="current_channel" id="current_channel" value="{{ channel }}">{{ channel }}</option>
                {% else %}
-                <option disabled="" selected="" value="">no current chanels. please create one.</option>
+                <option disabled="" selected="" value="">no current channels. please create one.</option>
 
              {% endfor %}
          </select>
@@ -84,7 +84,7 @@
 
         <div class="form-row">
       <div class="col">
-        <button id="chanel_subimt" type="submit" class="btn btn-primary">Submit</button>
+        <button id="channel_subimt" type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>
 

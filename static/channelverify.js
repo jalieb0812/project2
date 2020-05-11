@@ -2,16 +2,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  ///code to check if chanel name taken
-          function chanel_verify() {
+  ///code to check if channel name taken
+          function channel_verify() {
 
-              document.querySelector('#addchanel').onsubmit = () => {
+              document.querySelector('#addchannel').onsubmit = () => {
 
                 const request = new XMLHttpRequest();
 
-                const new_channel = document.querySelector("#new_chanel").value;
+                const new_channel = document.querySelector("#new_channel").value;
 
-                request.open('POST', '/chanel_verify', true);
+                request.open('POST', '/channel_verify', true);
 
                 request.onload = () => {
 
@@ -19,27 +19,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
                   if (data.validate == false){
                     //location.reload(true);
-                    window.alert(`chanel name ${new_channel} already exists, choose a new chanel name`);
+                    window.alert(`channel name ${new_channel} already exists, choose a new channel name`);
                     return false;
                   }
 
                   else {
 
-                    document.getElementById("#addchanel").submit();
+                    document.getElementById("#addchannel").submit();
                   }
 
 
                 }
 
                 const data = new FormData();
-                data.append('new_chanel', new_chanel)
+                data.append('new_channel', new_channel)
                 request.send(data);
                 //return false;
 
 
                   //console.log(JSON.parse(request.responseText))
 
-                //  const chanel = document.querySelector("#new_chanel").value;
+                //  const channel = document.querySelector("#new_channel").value;
 
 
               };

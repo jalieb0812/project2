@@ -13,15 +13,15 @@
 
 <!--<script src="{{url_for('static', filename = 'usernamestorage.js')}}"> </script>-->
 
-<!--script src="{{url_for('static', filename = 'chanelverify.js')}}"> </script>-->
+<!--script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>-->
 <!--<script src="{{url_for('static', filename = 'users.js')}}"> </script> -->
-<!--<script src="{{url_for('static', filename = 'chanels.js')}}"> </script>-->
+<!--<script src="{{url_for('static', filename = 'channels.js')}}"> </script>-->
 
 
  <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
-<!-- <script src="{{url_for('static', filename = 'chanelslist.js')}}"> </script>-->
+<!-- <script src="{{url_for('static', filename = 'channelslist.js')}}"> </script>-->
 
-<script src="{{url_for('static', filename = 'chanelverify.js')}}"> </script>
+<script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>
  <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
 
@@ -34,9 +34,9 @@
 
    document.addEventListener('DOMContentLoaded', () => {
 
-     if ('{{session['chanel']}}') {
+     if ('{{session['channel']}}') {
 
-       localStorage.setItem('current_channel', '{{session['chanel']}}')
+       localStorage.setItem('current_channel', '{{session['channel']}}')
        let channel = localStorage.getItem('current_channel');
       // document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
 
@@ -56,36 +56,36 @@
 
 <div class="d-flex justify-content-between bg-secondary">
 
- <div class="my-flex-container-column-chanels">
+ <div class="my-flex-container-column-channels">
 
 <div >
-  <div class=" form-row-add-chanel-form">
-    <form id="addchanel" onsubmit="chanel_verify()" style = text-center>
-      <input  id="new_chanel" class="form-control" name="new_chanel"  type="text" autocomplete="off"  placeholder="chanel" >
-      <input class="btn btn-primary"  onclick="chanel_verify()"  id="chanelsubmit" type="submit" value="create chanel"> </input>
+  <div class=" form-row-add-channel-form">
+    <form id="addchannel" onsubmit="channel_verify()" style = text-center>
+      <input  id="new_channel" class="form-control" name="new_channel"  type="text" autocomplete="off"  placeholder="channel" >
+      <input class="btn btn-primary"  onclick="channel_verify()"  id="channelsubmit" type="submit" value="create channel"> </input>
     </form>
   </div>
 
-      <div  id="slackchanels">
+      <div  id="slackchannels">
 
 <!--
   <div id="nav">
-        <p><a href="" class="nav-link" id="chanel" data-page="messages"></a> Current Chanel: {{session.chanel}}</p>
+        <p><a href="" class="nav-link" id="channel" data-page="messages"></a> Current channel: {{session.channel}}</p>
   </div >
 -->
 
 <div  class="vertical-menu">
 
 
- <div id="chanels">
-   {% for chanel in chanels_list %}
+ <div id="channels">
+   {% for channel in channels_list %}
 
-      <a href="{{ url_for('chanel', chanel=chanel, channel=chanel, username=session.username )}} "  data-chanel={{chanel}} class="the_channels" id="chanel" data-page="messages">
-          chanel:  {{ chanel }}
+      <a href="{{ url_for('channel', channel=channel, channell=channel, username=session.username )}} "  data-channel={{channel}} class="the_channels" id="channel" data-page="messages">
+          channel:  {{ channel }}
         </a>
 
        {% else %}
-     <li>No chanels</li>
+     <li>No channels</li>
       {% endfor %}
  </div>
 
@@ -113,7 +113,7 @@
 
               <div class="form-row">
                 <div class="col">
-                      <input type="text" id="deleted_channel" class="form-control" name="new_chanel"  autocomplete="off" placeholder="channel"name="delete_channel" >
+                      <input type="text" id="deleted_channel" class="form-control" name="new_channel"  autocomplete="off" placeholder="channel"name="delete_channel" >
                 </div>
                 <div class="col">
                   <button  type="submit"" >Delete Channel</button>
@@ -127,7 +127,7 @@
 
             <div  class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </div>
 
-            <div class="p-2 my-flex-item  align-self-center" id= "current_chanel"> chanel: {{session.chanel}}</div>
+            <div class="p-2 my-flex-item  align-self-center" id= "current_channel"> channel: {{session.channel}}</div>
 
           </div>
 
@@ -139,7 +139,7 @@
 
 <!--   <textarea id="messages" class="form-control" name="chatroom" rows=15 width=100% flex style ="justify-content: center" readonly> -->
 
-      {% for message in messages_dict[session.chanel] %}
+      {% for message in messages_dict[session.channel] %}
         <div> {{message}} </div>
        {% endfor %}
 
@@ -155,10 +155,10 @@
       <div class="col-11">
      <textarea id="message" width=100% class="form-control" autofocus="autofocus" autocomplete="off" type="submit" placeholder="message" required></textarea>
     </div>
-    <div class="col-1">
-    <button class=" btn-primary w-100 h-100"  id="messagesubmit" type="submit" >Send<button>
-    </div>
+    <div class="col-row-1">
+       <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
   </div>
+</div>
 </form>
 
 
@@ -194,15 +194,15 @@
 
 
 
-  function chanel_verify() {
+  function channel_verify() {
 
-      document.querySelector('#addchanel').onsubmit = () => {
+      document.querySelector('#addchannel').onsubmit = () => {
 
         const request = new XMLHttpRequest();
 
-        const channel = document.querySelector("#new_chanel").value;
+        const channel = document.querySelector("#new_channel").value;
 
-        request.open('POST', '/chanel_verify', true);
+        request.open('POST', '/channel_verify', true);
 
         request.onload = () => {
 
@@ -215,7 +215,7 @@
           }
 
           else {
-            alert(`chanel ${channel} created`)
+            alert(`channel ${channel} created`)
             return false;
             //location.reload(true)
 
@@ -224,7 +224,7 @@
         }
 
         const data = new FormData();
-        data.append('new_chanel', channel)
+        data.append('new_channel', channel)
         request.send(data);
         //return false;
 

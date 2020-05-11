@@ -39,7 +39,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     //default submit is disabled
     document.querySelector('#messagesubmit').disabled = true;
-    //enable chanel submit oly if text in the field
+    //enable channel submit oly if text in the field
      document.querySelector('#message').onkeyup = () => {
 
       if (document.querySelector('#message').value.length > 0)
@@ -56,7 +56,7 @@
       ///clear the form
       document.querySelector('#message').value = '';
 
-      /// set chanel subit back to disabled
+      /// set channel subit back to disabled
       document.querySelector('#messagesubmit').disabled = true;
       return false;
     }

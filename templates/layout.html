@@ -19,7 +19,7 @@
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <!--  <script src="{{url_for('static', filename = 'chanels.js')}}"> </script> -->
+    <!--  <script src="{{url_for('static', filename = 'channels.js')}}"> </script> -->
 
     <title>  {% block title %}JO FLACK APP APP: {% endblock %}</title>
 
@@ -113,7 +113,7 @@ main.col{
 
 }
 
-#new_chanel{
+#new_channel{
 
   width: auto;
 
@@ -127,7 +127,7 @@ main.col{
 
   width: 100%
 }
-#addchanel{
+#addchannel{
 
   align: left;
 
@@ -214,7 +214,7 @@ div.p-2{
 }
 
 @media (min-width: 376px){
-.my-flex-container-column-chanels {
+.my-flex-container-column-channels {
   border: 2px solid green;
   background-color: DodgerBlue;
   height: auto;
@@ -224,7 +224,7 @@ div.p-2{
 }
 
 @media (max-width: 375px){
-.my-flex-container-column-chanels {
+.my-flex-container-column-channels {
   border: 2px solid green;
   background-color: DodgerBlue;
   height: auto;
@@ -267,7 +267,7 @@ width: 100%;
 }
 
 @media (min-width: 376px)  {
-.form-row-add-chanel-form{
+.form-row-add-channel-form{
 
   width: 150px;
 }
@@ -275,12 +275,12 @@ width: 100%;
 }
 
 @media (max-width: 375px)  {
-.form-row-add-chanel-form{
+.form-row-add-channel-form{
 
   width: 100px;
 }
 
-#chanelsubmit{
+#channelsubmit{
   width: 100px;
 }
 }
@@ -400,7 +400,7 @@ color: white;
 
 
         <nav class="navbar navbar-expand-md navbar-dark bg-dark border">
-            <a class="navbar-brand" href="{{url_for('index', username=session.username, chanel=session.chanel)}}", ><span class="blue">J</span><span class="red">O</span><span class="yellow">SLACK</span><span class="green"></span> <span class="red"> APP</span></a>
+            <a class="navbar-brand" href="{{url_for('index', username=session.username, channel=session.channel)}}", ><span class="blue">J</span><span class="red">O</span><span class="yellow">SLACK</span><span class="green"></span> <span class="red"> APP</span></a>
             <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
