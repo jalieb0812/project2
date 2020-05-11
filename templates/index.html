@@ -135,22 +135,30 @@
 
 <div  class="form-group row" >
 
+<div id="messages" style="height: 50vh" flex width=100% style ="justify-content: center">
 
-   <textarea id="messages" class="form-control" name="chatroom" rows=15 width=100% flex style ="justify-content: center" readonly>
+<!--   <textarea id="messages" class="form-control" name="chatroom" rows=15 width=100% flex style ="justify-content: center" readonly> -->
 
       {% for message in messages_dict[session.chanel] %}
-          {{message}}
+        <div> {{message}} </div>
        {% endfor %}
 
-    </textarea>
+  <!--  </textarea> -->
+
+  </div>
  </div>
 
     <hr>
-<form id="messaging" >
-    <div class="form-group row" >
-     <textarea id="message"  class="form-control" autofocus="autofocus" autocomplete="off" type="text" placeholder="message" required></textarea>
+<form  id="messaging" >
+
+    <div class="form-group-block row" >
+      <div class="col-11">
+     <textarea id="message" width=100% class="form-control" autofocus="autofocus" autocomplete="off" type="submit" placeholder="message" required></textarea>
+    </div>
+    <div class="col-1">
+    <button class=" btn-primary w-100 h-100"  id="messagesubmit" type="submit" >Send<button>
+    </div>
   </div>
-    <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
 </form>
 
 

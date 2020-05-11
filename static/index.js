@@ -6,15 +6,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
 
-  if (window.innerWidth > 376){
-    document.querySelector("#messages").setAttribute("rows", "15")
-  }
-
-  if (screen.innerWidth < 376) {
-    document.querySelector("#messages").setAttribute("rows", "30")
-
-  }
-
     // Connect to websocket
     var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port, {transports: ['websocket']});
   //
@@ -54,11 +45,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     socket.on('send message', data => {
-      //const row = document.createElement('row');
+      const div = document.createElement('div');
 
-      const row = `${data.timestamp}: ${data.username}:  ${data.message}`;
 
-      document.querySelector('#messages').value += row + '\n';
+      div.innerHTML = `${data.timestamp}: ${data.username}:  ${data.message} `;
+
+
+
+    //  const row = `${data.timestamp}: ${data.username}:  ${data.message}`;
+
+
+
+      document.querySelector('#messages').append(div);
+
+
+
+
+
+      //document.querySelector('#messages').value += row + '\n';
 
       //scroll to botton of text area
       document.querySelector("#messages").scrollTop = document.getElementById("messages").scrollHeight;

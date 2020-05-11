@@ -335,7 +335,7 @@ def message(data):
     print(f"this is the chanel in submit message: {chanel}")
 
 
-    full_message = timestamp + ": " + session["username"] + ": " +  message
+    full_message = timestamp + ": " + session["username"] + ": " +  message +'\n'
 
     messages_list.append(full_message)
 
@@ -345,10 +345,10 @@ def message(data):
     if len(messages_list) > 100:
         messages_list.pop([0])
 
-    print(f"this is messages_list in submit message after append:  {messages_list}: \n")
+    print(f"this is messages_list in submit message after append:  {messages_list}:")
 
 
-    print(f"this is messages_dict in submit message before addition:  {messages_dict}: \n")
+    print(f"this is messages_dict in submit message before addition:  {messages_dict}:")
 
     if chanel in messages_dict:
 
@@ -362,56 +362,9 @@ def message(data):
         print("this else is happening")
         messages_dict[chanel] = [full_message]
 
-    #messages_dict[chanel] = timestamp + ": " + session["username"] + ": " +  message
+    print(f"this is messages_dict in submit message after addition:  {messages_dict}: ")
 
-    print(f"this is messages_dict in submit message after addition:  {messages_dict}: \n")
-
-    #messages_list.append("chanel: " +  chanel  + ":" +  str(messages_dict))
-
-    #messagedict = {"message": message, "username": session["username"]}
-    #messagedict["message"] = message
-    #messagedict["user_name"]= session["username"]
-
-    #messages["message"].append(messagedict["message"])
     emit("send message",  { 'timestamp': timestamp, 'username': session["username"], 'message': message },  broadcast=True)
-
-
-""" route for sending the stored messages """
-"""
-@app.route("/messages", methods = ["GET"])
-def messages():
-
-    if request.method == "GET":
-
-        if len(chanels_list) > 0 and len(messages_list) > 0:
-            chanel = session['chanel']
-
-
-            for key in messages_dict:
-                if key == session["chanel"]:
-                    old_chats = messages_dict[key]
-
-                    print(f"here is the old chats: {old_chats}")
-
-            print(messages_dict)
-
-        #    print(f"this is messages list: {messages_list}")
-
-
-
-            return str(old_chats)
-
-
-        else:
-
-            return str("no messages")
-"""
-
-
-
-
-
-
 
 
 @app.route("/createchanel", methods=["GET", "POST"])
