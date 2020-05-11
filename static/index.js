@@ -144,6 +144,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
 
-        socket.on("channel_deleted", data => {
 
 });
