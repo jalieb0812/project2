@@ -17,7 +17,11 @@
 
       <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
 
+
+      <script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
 
     <!--  <script src="{{url_for('static', filename = 'channels.js')}}"> </script> -->
 
@@ -32,6 +36,63 @@ nav .navbar
     font-size: xx-large;
 }
 
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  cursor: pointer;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
 
 }
 main .form-control
@@ -113,14 +174,32 @@ main.col{
 
 }
 
+#new_chanel{
+
+  width: auto;
+display: inline-block;
+
+}
+
 #new_channel{
 
   width: auto;
+display: inline-block;
 
-  display: inline-block;
 }
 
+#deleted_channel{
 
+  width: auto;
+
+
+}
+
+#channelsubmit{
+
+  width: 150px;
+
+}
 #messages {
 
   display: flex;
@@ -130,6 +209,7 @@ main.col{
 #addchannel{
 
   align: left;
+
 
 }
 
@@ -176,6 +256,7 @@ div.p-2{
   height: auto;
   width: 100%;
   padding: none;
+  overflow-y: auto;
 
   }
 }
@@ -188,6 +269,7 @@ div.p-2{
   width: 100%;
   height: 90vh;
   padding: none;
+  overflow-y: auto;
   }
 }
 
@@ -233,6 +315,11 @@ div.p-2{
 
 
 }
+}
+
+#channels{
+
+  width: 100%;
 }
 
 
@@ -270,6 +357,7 @@ width: 100%;
 .form-row-add-channel-form{
 
   width: 150px;
+
 }
 
 }
@@ -277,12 +365,18 @@ width: 100%;
 @media (max-width: 375px)  {
 .form-row-add-channel-form{
 
+
   width: 100px;
+}
+}
+
+.form-row{
+
+  width: auto;
 }
 
 #channelsubmit{
-  width: 100px;
-}
+  width: auto;
 }
 
 
@@ -304,6 +398,16 @@ width: 100%;
 }
 }
 
+
+@media (max-width: 376px){
+#add-delete-forms-top-info{
+
+  display: none;
+  margin-top: 0px;
+}
+}
+
+
 textarea {
 
 
@@ -323,6 +427,12 @@ footer {
   display: none;
 }
 
+.col-row-flex {
+
+  width: auto;
+}
+
+
 #messages{
 
   display: block;
@@ -334,6 +444,7 @@ footer {
   overflow-y: auto;
 
 }
+
 
 #messaging{
 
@@ -383,6 +494,7 @@ color: black; /* Black text color */
 display: block; /* Make the links appear below each other */
 padding: 6px; /* Add some padding */
 text-decoration: none; /* Remove underline from links */
+width: 100%;
 }
 
 .vertical-menu a:hover {
@@ -399,10 +511,11 @@ color: white;
     <body style="background-color: lightblue">
 
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark border">
+        <nav class="navbar navbar-expand-mdy navbar-dark bg-dark border">
             <a class="navbar-brand" href="{{url_for('index', username=session.username, channel=session.channel)}}", ><span class="blue">J</span><span class="red">O</span><span class="yellow">SLACK</span><span class="green"></span> <span class="red"> APP</span></a>
             <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
+                Menu
             </button>
             <div class="collapse navbar-collapse" id="navbar">
 
@@ -410,12 +523,52 @@ color: white;
                 {% if session.username %}
 
                     </ul>
-                    <ul class="navbar-nav ml-auto mt-2">
+                    <ul class="navbar-nav ml-auto mt-2 ">
+                        <li class="nav-item"><a class="nav-link" href="/channels">Channels</a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+
+
                     </ul>
 
-                {% endif %}
+          <div class="row">
+
+            <div class="col p-2">
+
+              <div class=" form-row">
+                      <form id="addchannel" onsubmit="channel_verify()" method="post" action="{{url_for('index', username=session.username, channel=session['channel'])}}">
+                        <div class="form-row">
+                          <input  id="new_channel" class="form-control" name="new_channel" placeholder="addchannel" type="text" >
+                          <button class="btn btn-primary"  id="channelsubmit"  onclick="channel_verify()" class="form-control" name="new_channel"  type="submit" autocomplete="off"  placeholder="addchannel">Add Channel</button>
+                        </div>
+                          </form>
+
+                  </div>
             </div>
+
+                <div class="col p-2">
+                  <div class="form-row">
+                    <form id="channel_delete" method="post" action="{{url_for('index', username=session.username, channel=session.channel)}}">
+                      <div class="form-row">
+                          <input type="text" id="deleted_channel" class="form-control" autocomplete="off" placeholder="deletechannel"name="delete_channel">
+                          <button  class="btn btn-primary" type="submit" >Delete Channel</button>
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
+            </div>
+
+
+                {% endif %}
+
+
+
+
+
+            </div>
+
+
+
         </nav>
 
         <header>
@@ -448,6 +601,7 @@ color: white;
         <footer class="small text-center text-muted justify-content-flex-e">
             Developed by Jordan Lieber.
         </footer>
+
 
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

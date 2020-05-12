@@ -5,10 +5,6 @@
 {% endblock %}
 
 {% block main %}
-<style >
-
-</style>
-
 
 <!--<script src="{{url_for('static', filename = 'loadpage.js')}}"> </script> -->
 
@@ -23,22 +19,45 @@
 <!-- <script src="{{url_for('static', filename = 'channelslist.js')}}"> </script>-->
 
 
-<script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>
+<!--<script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>-->
 
 
 <script type="text/javascript">
 
   document.addEventListener('DOMContentLoaded', () => {
 
-    if ('{{session['channel']}}')
+    if (('{{session['channel']}}'))  {
+
+
 
       localStorage.setItem('current_channel', '{{session['channel']}}')
       let channel = localStorage.getItem('current_channel');
     //  document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
 
+  }
+  else {
 
 
-      });
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.get('channel'))
+       current_channel = urlParams.get('channel');
+
+
+    else {
+       current_channel = urlParams.get('channell');
+     };
+
+        localStorage.setItem('current_channel', current_channel)
+        let channel = localStorage.getItem('current_channel');
+  };
+
+
+
+
+     });
 
 </script>
 
@@ -51,7 +70,7 @@
 
  <div >
    <div class=" form-row-add-channel-form">
-     <form id="addchannel"  style = text-center >
+     <form id="addchannel" onsubmit="channel_verify()"  style = text-center >
        <input  id="new_channel" class="form-control" name="new_channel" type="text" autocomplete="off"  placeholder="channel" >
        <input class="btn btn-primary" onclick="channel_verify()"  id="channelsubmit" type="submit" value="create channel"> </input>
      </form>
@@ -102,7 +121,7 @@
 
                <div class="form-row">
                  <div class="col">
-                       <input type="text" id="deleted_channel" class="form-control" name="new_channel"  autocomplete="off" placeholder="channel"name="delete_channel" >
+                       <input type="text" id="deleted_channel" class="form-control"  autocomplete="off" placeholder="channel"name="delete_channel" >
                  </div>
                  <div class="col">
                    <button  type="submit"" >Delete Channel</button>
@@ -202,8 +221,9 @@
            }
 
            else {
-            alert(`channel ${new_channel} created`)
-             document.getElementById("#addchannel").submit();
+            alert(`channel ${channel} created`)
+          //  return false;
+
            }
 
 
@@ -212,7 +232,7 @@
          const data = new FormData();
          data.append('new_channel', channel)
          request.send(data);
-         //return false;
+        // return false;
 
 
            //console.log(JSON.parse(request.responseText))

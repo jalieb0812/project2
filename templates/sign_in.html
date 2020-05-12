@@ -9,16 +9,15 @@
 
 
 
-
 <div class="container-flex-log">
   <h1 id="sign_in_welcome">Welcome to JOSlack</h1>
 
 <label for="username"> Enter your username</label>
-    <form id="add_user" action="/sign_in" method="post">
+    <form id="add_user" onsubmit="user_verify()" action="/sign_in" method="post">
         <div class="form-group">
-            <input id="username" autocomplete="off" autofocus class="form-log" name="username" placeholder="Username" type="text">
+            <input  id="username"  autocomplete="off" autofocus class="form-log" name="username" placeholder="Username" type="text">
         </div>
-        <button class="btn btn-primary" type="submit">Sign In</button>
+        <button id="user_submit" onclick="user_verify()" class="btn btn-primary" type="submit">Sign In</button>
     </form>
   </div>
 
@@ -26,6 +25,8 @@
   <script type="text/javascript">
 
     document.addEventListener('DOMContentLoaded', () => {
+
+
 
       //clear last user
       localStorage.setItem('user', '')
@@ -38,7 +39,76 @@
 
         //return false;
       }
+
+      document.querySelector('#user_submit').disabled = true;
+      document.querySelector('#username').onkeyup = () =>{
+
+
+
+
+
+        if (document.querySelector('#username').value.length > 0)
+             document.querySelector('#user_submit').disabled = false;
+         else
+             document.querySelector('#user_submit').disabled = true;
+
+           };
+
+
     })
+
+
+  </script>
+
+<script type="text/javascript">
+
+
+  ///code to check if channel name taken
+          function user_verify() {
+
+              document.querySelector('#add_user').onsubmit = () => {
+
+                const request = new XMLHttpRequest();
+
+                const username = document.querySelector("#username").value;
+
+                request.open('POST', '/user_verify', true);
+
+                request.onload = () => {
+
+                  const data = JSON.parse(request.responseText);
+
+                  if (data.validate == false){
+                    //location.reload(true);
+                    window.alert(`user name ${username} already exists, choose a new username`);
+
+                    return false;
+                  }
+
+                  else {
+
+                  alert(`username ${username} created`)
+                  }
+
+
+
+                }
+
+                const data = new FormData();
+                data.append('username', username)
+                request.send(data);
+              //  document.querySelector('#username').value = '';
+
+
+
+                  //console.log(JSON.parse(request.responseText))
+
+                //  const channel = document.querySelector("#new_channel").value;
+
+
+              };
+            };
+
 
   </script>
 

@@ -26,17 +26,44 @@
 
  <script type="text/javascript">
 
+  document.addEventListener('DOMContentLoaded', () => {
+
+
    if(localStorage.getItem('user'))
-     document.addEventListener('DOMContentLoaded', () => {
+   {
        let user = localStorage.getItem('user');
          document.querySelector('#channelwelcometext').innerHTML = `Hi ${user}`;
 
-         return false;
+}
+//if (document.querySelector('#new_channel').value.length > 0)
+//
+ //document.querySelector('#current_channels').disabled = true;
+//};
 
-       });
+        return false;
+
+
+
+
+
+})
 
  </script>
 
+
+ <script type="text/javascript">
+
+   ///prevent user from
+   function one() {
+
+     if (document.querySelector('#new_chanel').value.length > 0)
+          document.querySelector('#current_channels').disabled = true;
+      else
+          document.querySelector('#current_channels').disabled = false;
+
+        };
+
+ </script>
 
 <div class="container" style="margin-top:50px">
 
@@ -58,7 +85,7 @@
       <div class="col">
   <label for="new_channel" class="col-form-label">New channel:</label>
 
-     <input type="text" class="form-control" id="new_channel" name="new_channel">
+     <input type="text" onkeyup="one()" class="form-control" id="new_channel" name="new_channel">
      </div>
 
   </div>
@@ -70,7 +97,7 @@
 
 
 
-           <select   name="current_channels" id="current_channels" style="width:50%">
+           <select  name="current_channels" id="current_channels" style="width:50%" >
              <option disabled="" selected="" value="">channel</option>
              {% for channel in channels_list %}
                  <option name="current_channel" id="current_channel" value="{{ channel }}">{{ channel }}</option>
@@ -84,7 +111,7 @@
 
         <div class="form-row">
       <div class="col">
-        <button id="channel_subimt" type="submit" class="btn btn-primary">Submit</button>
+        <button id="channel_submit" type="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>
 

@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.emit("submit channel", { 'channel': channel});
 
         document.querySelector('#new_channel').value = '';
-        return false;
+        //return false;
 
        };
 
@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
          socket.emit("delete_channel", { 'channel': channel});
 
-         document.querySelector('#new_channel').value = '';
-         return false;
+         document.querySelector('#deleted_channel').value = '';
+        // return false;
 
         };
 
@@ -116,13 +116,15 @@ document.addEventListener('DOMContentLoaded', () => {
         a.setAttribute("class", "nav-link" );
         a.setAttribute('id', "channel");
         a.setAttribute('data-page', "messages")
-        a.setAttribute("href", `/channel/${data.channel}`  )
+        a.setAttribute("href", `/channel/${data.channel}` )
         a.innerHTML = `channel: ${data.channel}`;
-        document.querySelector('#channels').append(a)
-        alert(`channel ${data.channel} created`)
+        document.querySelector('#channels').append(a);
+        alert(`hmmm channel ${data.channel} created`);
 
         //relock channel submit
+        document.querySelector('#new_channel').value = '';
         document.querySelector('#channelsubmit').disabled = true;
+        return false;
 
     //  document.querySelector('#channels').append(li) ;
 
@@ -132,12 +134,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         socket.on("channel_deleted", data => {
 
+          const queryString = window.location.search;
+          const urlParams = new URLSearchParams(queryString);
 
-          var list = document.getElementById("channels");
-          list.removeChild(list.childNodes[data.channel]);
-          alert(`channel: ${data.channel} deleted`)
-          document.querySelector('#deleted_channel').value = '';
-            return false;
+          if (urlParams.get('channel'))
+             cur_channel = urlParams.get('channel');
+
+           else {
+              cur_channel = urlParams.get('channell');
+               }
+
+          if (channel == cur_channel)
+
+          alert(`cannot delete channel while inside the channel`);
+
+          else {
+
+            var list = document.getElementById("channels");
+            list.removeChild(list.childNodes[data.channel]);
+            alert(`channel: ${data.channel} deleted`)
+            document.querySelector('#deleted_channel').value = '';
+              //return false;
+
+          }
+
 
 
 //  document.querySelector('#channels').append(li) ;

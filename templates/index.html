@@ -6,9 +6,7 @@
 
 {% block main %}
 
-<style >
 
-</style>
 
 
 <!--<script src="{{url_for('static', filename = 'usernamestorage.js')}}"> </script>-->
@@ -21,9 +19,10 @@
  <!--<script src="{{url_for('static', filename = 'index.js')}}"> </script>-->
 <!-- <script src="{{url_for('static', filename = 'channelslist.js')}}"> </script>-->
 
-<script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>
+<!--script src="{{url_for('static', filename = 'channelverify.js')}}"> </script> -->
  <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
+<script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>
 
 
  <script type="text/javascript">
@@ -43,7 +42,6 @@
      }
 
 
-
        });
 
 //     }
@@ -58,13 +56,6 @@
 
  <div class="my-flex-container-column-channels">
 
-<div >
-  <div class=" form-row-add-channel-form">
-    <form id="addchannel" onsubmit="channel_verify()" style = text-center>
-      <input  id="new_channel" class="form-control" name="new_channel"  type="text" autocomplete="off"  placeholder="channel" >
-      <input class="btn btn-primary"  onclick="channel_verify()"  id="channelsubmit" type="submit" value="create channel"> </input>
-    </form>
-  </div>
 
       <div  id="slackchannels">
 
@@ -80,7 +71,7 @@
  <div id="channels">
    {% for channel in channels_list %}
 
-      <a href="{{ url_for('channel', channel=channel, channell=channel, username=session.username )}} "  data-channel={{channel}} class="the_channels" id="channel" data-page="messages">
+      <a href="{{ url_for('channel', channel=channel, channell=channel, username=session.username )}} "  width=100% data-channel={{channel}} class="the_channels" id="channel" data-page="messages">
           channel:  {{ channel }}
         </a>
 
@@ -91,45 +82,52 @@
 
       </div>
      </div>
-     </div>
   </div>
 
-<div class="p-2 my-flex-container-column-messages">
 
-  <div class="container-flex">
+<div  class="p-2   my-flex-container-column-messages">
+
+  <div class="container-flex " >
 
       <div class="p-2">
+
+        <div id="add-delete-forms-top-info" >
+
+
 
          <h3 id="userwelcome"> </h3>
          {% if session.username %}
           <p id="demo"></p>
              {% endif %}
 
-          <div class="d-flex flex-row  justify-content-between flex-wrap  my-flex-container">
+      <div  class="d-flex flex-row  justify-content-between flex-wrap  my-flex-container">
+
+
 
           <!--  <p id="channel_check"> </p> -->
 
+<!--
             <form id="channel_delete"">
 
               <div class="form-row">
                 <div class="col">
-                      <input type="text" id="deleted_channel" class="form-control" name="new_channel"  autocomplete="off" placeholder="channel"name="delete_channel" >
+                      <input type="text" id="deleted_channel" class="form-control" autocomplete="off" placeholder="channel"name="delete_channel" >
                 </div>
                 <div class="col">
                   <button  type="submit"" >Delete Channel</button>
                 </div>
-
-              </div>
-
-
-
-              </form>
+-->
+            <h3 id="userwelcome"> </h3>
 
             <div  class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </div>
 
             <div class="p-2 my-flex-item  align-self-center" id= "current_channel"> channel: {{session.channel}}</div>
 
           </div>
+
+        </div>
+
+            </div>
 
 
 
@@ -149,13 +147,13 @@
  </div>
 
     <hr>
-<form  id="messaging" >
+<form  id="messaging"  >
 
-    <div class="form-group-block row" >
+    <div class="form-group-row" >
       <div class="col-11">
      <textarea id="message" width=100% class="form-control" autofocus="autofocus" autocomplete="off" type="submit" placeholder="message" required></textarea>
     </div>
-    <div class="col-row-1">
+    <div class="col-row-flex">
        <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
   </div>
 </div>
@@ -167,11 +165,21 @@
   </div>
 </div>
 
-<div class="my-flex-container-column-users">
+
+
+</div>
+<div class="row">
+
+</div>
+
+
+
+
+<div class = "my-flex-container-column-user">
 
  <div class=" bg-primary">
    <div  id="namespace" style ="justify-content: center">
-     <h6>users</h6>
+     <h6> total users below: </h6>
 
      <ul>
     {% for user in users %}
@@ -182,16 +190,15 @@
       <li>No users</li>
      {% endfor %}
      </ul>
+
       <ul id="names"> </ul>
       </div>
      </div>
    </div>
+
   </div>
-</div>
 
 <script type="text/javascript">
-
-
 
 
   function channel_verify() {
@@ -216,7 +223,7 @@
 
           else {
             alert(`channel ${channel} created`)
-            return false;
+            //return false;
             //location.reload(true)
 
           }
@@ -226,7 +233,7 @@
         const data = new FormData();
         data.append('new_channel', channel)
         request.send(data);
-        //return false;
+      //  return false;
 
 
       };
