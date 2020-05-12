@@ -22,91 +22,91 @@
 <!--script src="{{url_for('static', filename = 'channelverify.js')}}"> </script> -->
  <script src="{{url_for('static', filename = 'index.js')}}"> </script>
 
-<script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>
+ <script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>
 
 
  <script type="text/javascript">
-
-//   if (!localStorage.getItem(current_channel)) {
+   //   if (!localStorage.getItem(current_channel)) {
 
 
 
    document.addEventListener('DOMContentLoaded', () => {
 
-     if ('{{session['channel']}}') {
+     if ('{{session['
+       channel ']}}') {
 
-       localStorage.setItem('current_channel', '{{session['channel']}}')
+       localStorage.setItem('current_channel', '{{session['
+         channel ']}}')
        let channel = localStorage.getItem('current_channel');
-      // document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
+       // document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
 
      }
 
 
-       });
+   });
 
-//     }
-
+   //     }
  </script>
 
-<div class="container-flex flex-wrap" >
+ <div class="container-flex flex-wrap">
 
 
 
-<div class="d-flex justify-content-between bg-secondary">
+   <div class="d-flex justify-content-between bg-secondary">
 
- <div class="my-flex-container-column-channels">
+     <div class="my-flex-container-column-channels">
 
 
-      <div  id="slackchannels">
+       <div id="slackchannels">
 
-<!--
+         <!--
   <div id="nav">
         <p><a href="" class="nav-link" id="channel" data-page="messages"></a> Current channel: {{session.channel}}</p>
   </div >
 -->
 
-<div  class="vertical-menu">
+         <div class="vertical-menu">
 
 
- <div id="channels">
-   {% for channel in channels_list %}
+           <div id="channels">
+             {% for channel in channels_list %}
 
-      <a href="{{ url_for('channel', channel=channel, channell=channel, username=session.username )}} "  width=100% data-channel={{channel}} class="the_channels" id="channel" data-page="messages">
-          channel:  {{ channel }}
-        </a>
+             <a href="{{ url_for('channel', channel=channel, channell=channel, username=session.username )}} " width=100% data-channel={{channel}} class="the_channels" id="channel" data-page="messages">
+               channel: {{ channel }}
+             </a>
 
-       {% else %}
-     <li>No channels</li>
-      {% endfor %}
- </div>
+             {% else %}
+             <li>No channels</li>
+             {% endfor %}
+           </div>
 
-      </div>
+         </div>
+       </div>
      </div>
-  </div>
 
 
-<div  class="p-2   my-flex-container-column-messages">
+     <div class="p-2   my-flex-container-column-messages">
 
-  <div class="container-flex " >
+       <div class="container-flex ">
 
-      <div class="p-2">
+         <div class="p-2">
 
-        <div id="add-delete-forms-top-info" >
+           <div id="add-delete-forms-top-info">
 
 
 
-         <h3 id="userwelcome"> </h3>
-         {% if session.username %}
-          <p id="demo"></p>
+             <h3 id="userwelcome"> </h3>
+             {% if session.username %}
+             <p id="demo"></p>
              {% endif %}
 
-      <div  class="d-flex flex-row  justify-content-between flex-wrap  my-flex-container">
+             <div class="d-flex flex-row  justify-content-between flex-wrap  my-flex-container">
 
 
 
-          <!--  <p id="channel_check"> </p> -->
+               <!--  <p id="channel_check"> </p> -->
 
-<!--
+               <!--
             <form id="channel_delete"">
 
               <div class="form-row">
@@ -117,130 +117,123 @@
                   <button  type="submit"" >Delete Channel</button>
                 </div>
 -->
-            <h3 id="userwelcome"> </h3>
+               <h3 id="userwelcome"> </h3>
 
-            <div  class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </div>
+               <div class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </div>
 
-            <div class="p-2 my-flex-item  align-self-center" id= "current_channel"> channel: {{session.channel}}</div>
+               <div class="p-2 my-flex-item  align-self-center" id="current_channel"> channel: {{session.channel}}</div>
 
-          </div>
+             </div>
 
-        </div>
+           </div>
 
-            </div>
-
-
-
-<div  class="form-group row" >
-
-<div id="messages" style="height: 50vh" flex width=100% style ="justify-content: center">
-
-<!--   <textarea id="messages" class="form-control" name="chatroom" rows=15 width=100% flex style ="justify-content: center" readonly> -->
-
-      {% for message in messages_dict[session.channel] %}
-        <div> {{message}} </div>
-       {% endfor %}
-
-  <!--  </textarea> -->
-
-  </div>
- </div>
-
-    <hr>
-<form  id="messaging"  >
-
-    <div class="form-group-row" >
-      <div class="col-11">
-     <textarea id="message" width=100% class="form-control" autofocus="autofocus" autocomplete="off" type="submit" placeholder="message" required></textarea>
-    </div>
-    <div class="col-row-flex">
-       <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
-  </div>
-</div>
-</form>
+         </div>
 
 
 
-   </div>
-  </div>
-</div>
+         <div class="form-group row">
+
+           <div id="messages" style="height: 50vh" flex width=100% style="justify-content: center">
+
+             <!--   <textarea id="messages" class="form-control" name="chatroom" rows=15 width=100% flex style ="justify-content: center" readonly> -->
+
+             {% for message in messages_dict[session.channel] %}
+             <div> {{message}} </div>
+             {% endfor %}
+
+             <!--  </textarea> -->
+
+           </div>
+         </div>
+
+         <hr>
+         <form id="messaging">
+
+           <div class="form-group-row">
+             <div class="col-11">
+               <textarea id="message" width=100% class="form-control" autofocus="autofocus" autocomplete="off" type="submit" placeholder="message" required></textarea>
+             </div>
+             <div class="col-row-flex">
+               <input id="messagesubmit" type="submit" value="Submit" class="btn btn-primary"></input>
+             </div>
+           </div>
+         </form>
 
 
 
-</div>
-<div class="row">
-
-</div>
-
-
-
-
-<div class = "my-flex-container-column-user">
-
- <div class=" bg-primary">
-   <div  id="namespace" style ="justify-content: center">
-     <h6> total users below: </h6>
-
-     <ul>
-    {% for user in users %}
-          <li>
-               {{ user }}
-        </li>
-        {% else %}
-      <li>No users</li>
-     {% endfor %}
-     </ul>
-
-      <ul id="names"> </ul>
-      </div>
+       </div>
      </div>
    </div>
 
-  </div>
-
-<script type="text/javascript">
 
 
-  function channel_verify() {
+ </div>
+ <div class="row">
 
-      document.querySelector('#addchannel').onsubmit = () => {
-
-        const request = new XMLHttpRequest();
-
-        const channel = document.querySelector("#new_channel").value;
-
-        request.open('POST', '/channel_verify', true);
-
-        request.onload = () => {
-
-          const data = JSON.parse(request.responseText);
-
-          if (data.validate == false){
-            //location.reload(true);
-            window.alert(`channel name ${channel} already exists, choose a new channel name`);
-            return false;
-          }
-
-          else {
-            alert(`channel ${channel} created`)
-            //return false;
-            //location.reload(true)
-
-          }
-
-        }
-
-        const data = new FormData();
-        data.append('new_channel', channel)
-        request.send(data);
-      //  return false;
+ </div>
 
 
-      };
-    };
 
 
-  </script>
+ <div class="my-flex-container-column-user">
 
+   <div class=" bg-primary">
+     <div id="namespace" style="justify-content: center">
+       <h6> total users below: </h6>
+
+       <ul>
+         {% for user in users %}
+         <li>
+           {{ user }}
+         </li>
+         {% else %}
+         <li>No users</li>
+         {% endfor %}
+       </ul>
+
+       <ul id="names"> </ul>
+     </div>
+   </div>
+ </div>
+
+ </div>
+
+ <script type="text/javascript">
+   function channel_verify() {
+
+     document.querySelector('#addchannel').onsubmit = () => {
+
+       const request = new XMLHttpRequest();
+
+       const channel = document.querySelector("#new_channel").value;
+
+       request.open('POST', '/channel_verify', true);
+
+       request.onload = () => {
+
+         const data = JSON.parse(request.responseText);
+
+         if (data.validate == false) {
+           //location.reload(true);
+           window.alert(`channel name ${channel} already exists, choose a new channel name`);
+           return false;
+         } else {
+           alert(`channel ${channel} created`)
+           //return false;
+           //location.reload(true)
+
+         }
+
+       }
+
+       const data = new FormData();
+       data.append('new_channel', channel)
+       request.send(data);
+       //  return false;
+
+
+     };
+   };
+ </script>
 
 {% endblock %}

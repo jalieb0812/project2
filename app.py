@@ -134,11 +134,21 @@ def sign_in():
 
 
 
+
+
     if request.method=="POST":
 
-        username = request.form.get("username")
+        print(f"these are the users {users}")
+
+        username = str(request.form.get("username"))
 
         print(f"username is {username}")
+
+
+        for name in users:
+            if name == username:
+                return redirect('/sign_in')
+
 
         session['username']= username
         users.append(username)
@@ -151,7 +161,6 @@ def sign_in():
         except:
 
             return redirect("/channels")
-
 
 
     if request.method=="GET":
@@ -174,15 +183,21 @@ def channels():
     if request.method == "POST":
 
 
+        if not request.form.get("new_channel") and not request.form.get("current_channels"):
+            flash("Error: you must create a channel or choose a current one")
+            return redirect('/channels')
 
         if request.form.get("new_channel"):
 
             channel = request.form.get("new_channel")
 
 
+
+
+
             for channels in channels_list:
                 if channels == channel:
-                    flash("channel name already taken. chose another channel name")
+                    flash("Error: Channel name already taken. Please choose another channel name")
                     return redirect('/channels')
 
             channels_list.append(channel)
@@ -231,28 +246,26 @@ def channel(channel):
 
 
 
-""" route for generating username"""
-
-@app.route("/username", methods=["POST"])
-def user():
-
-
-
-    # Forget any user_id
-    session.clear()
-
+""" route/code chcking usernames"""
+@app.route("/user_verify", methods=["POST"])
+def user_verify():
 
     username = request.form.get("username")
 
-    #if user somehow failed to enter the username b/c my javascript failed
 
 
-    session["username"]=username
+    print(f"this is username in user verify: {username}")
 
-    users.append(username)
+    for name in users:
+        if username == name:
+            return jsonify({"validate": False})
 
+        #users.append(username)
+        return jsonify({'validate': True})
 
-    return jsonify({"success": True, "username": username})
+    else:
+        #users.append(username)
+        return jsonify({'validate': True})
 
 
 
@@ -266,7 +279,7 @@ def add_channel(data):
 
     print(f"this is the  channel in submit channel: {channel}")
 
-    emit("create channel",  {'channel': channel},  broadcast=True)
+    emit("create channel",  {'channel': channel},   broadcast=True)
 
 
 """ route/code for ensuring no two channels have the same name"""
@@ -301,12 +314,20 @@ def delete_channel(data):
 
     print(f"this is the  channel to delete: {channel}")
 
-    for item in channels_list:
+    print(f"this is session channel in delete: {session['channel']}")
 
-        if item == channel:
-            channels_list.remove(item)
+    if channel == session["channel"]:
+        emit("channel_deleted", {'channel': channel}, broadcast=True)
 
-    emit("channel_deleted", {'channel': channel}, broadcast=True)
+    else:
+
+
+        for item in channels_list:
+
+            if item == channel:
+                channels_list.remove(item)
+
+        emit("channel_deleted", {'channel': channel}, broadcast=True)
 
     #return jsonify({'success': True})
 
@@ -408,7 +429,7 @@ def logout():
     return redirect("/")
 
 
-"""
+
 if __name__ == "__main__":
  port = int(os.environ.get("PORT", 8080))
  socketio.run(app, host="0.0.0.0", port=port)
@@ -418,3 +439,4 @@ if __name__ == '__main__':
 
 
     socketio.run(app)
+"""
