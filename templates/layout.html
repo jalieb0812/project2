@@ -140,7 +140,7 @@
 
   }
 
-  main.container {
+  main.container-flex {
 
     padding: none;
     margin: none;
@@ -210,12 +210,6 @@
 
   }
 
-  #user {
-
-    display: none;
-
-    width: 200px;
-  }
 
 
   .container-flex {}
@@ -257,7 +251,7 @@
       background-color: #fff;
       height: auto;
       width: 100%;
-      height: 90vh;
+      height: 93vh;
       padding: none;
       overflow-y: auto;
     }
@@ -281,7 +275,7 @@
       height: auto;
       width: 150px;
 
-      display: none;
+
     }
   }
 
@@ -335,6 +329,28 @@
     }
   }
 
+  @media (max-width: 375px) {
+  .my-flex-item-channel {
+    background-color: DodgerBlue;
+    color: yellow;
+    border: 1px solid black;
+    height: auto;
+    width: 100px;
+    justify-content: center;
+    font-size: 12px;
+    float: right;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+  }
+}
+
+  @media (min-width: 376px) {
+    .my-flex-item-channel {
+
+      display: none;
+
+    }
+  }
 
   .col-8 {
     background-color: yellow;
@@ -399,7 +415,7 @@
     background-color: #f8f8f8;
     width: 100%;
     height: 100%;
-    overflow-y: auto;
+
     float: left;
     text-align: left;
 
@@ -415,6 +431,23 @@
   }
 
 
+
+  @media (min-width: 376px) {
+  #messages {
+
+    display: block;
+    float: left;
+    text-align: left;
+    color: green;
+    margin-left: 15px;
+    margin-bottom: auto;
+    overflow-y: auto;
+    height: 56vh;
+
+  }
+}
+
+  @media (max-width: 375px) {
   #messages {
 
     display: block;
@@ -422,11 +455,13 @@
     text-align: left;
     color: green;
     margin-left: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+    height: 70vh;
     overflow-y: auto;
 
-  }
 
+  }
+}
 
   #messaging {}
 
@@ -434,6 +469,7 @@
 
     height: 100%;
     width: 100%;
+
   }
 
   input[type=submit] {

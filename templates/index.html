@@ -32,13 +32,13 @@ Home Page
 
   document.addEventListener('DOMContentLoaded', () => {
 
-    if ('{{session['channel ']}}') {
+    if ('{{session['channel ']}}')
 
-      localStorage.setItem('current_channel', '{{session['channel ']}}')
-      let channel = localStorage.getItem('current_channel');
-      // document.querySelector('#channel_check').innerHTML = `Channel ${channel}`;
+      localStorage.setItem('current_channel', '{{session['channel']}}')
+      let cur_channel = localStorage.getItem('current_channel');
+       document.querySelector('#channel_check').innerHTML = `Current channel: ${cur_channel}`;
+       //return false;
 
-    }
 
   });
 
@@ -66,6 +66,7 @@ Home Page
 
 
           <div id="channels">
+              <div class="p-2 my-flex-item-channel  " id="channel_check"> </div>
             {% for channel in channels_list %}
 
             <a href="{{ url_for('channel', channel=channel,  channell=channel, username=session.username )}} " width=100% data-channel={{channel}} class="the_channels" id="channel" data-page="messages">
@@ -131,6 +132,11 @@ Home Page
 
             <h3 id="userwelcome"> </h3>
 
+
+
+
+
+
             <div class="p-2 my-flex-item align-self-center" id="greeting"> welcome, {{session.username}} </div>
 
             <div class="p-2 my-flex-item  align-self-center" id="current_channel"> channel: {{session.channel}}</div>
@@ -145,7 +151,7 @@ Home Page
 
       <div class="form-group row">
 
-        <div id="messages" style="height: 50vh" flex width=100% style="justify-content: center">
+        <div id="messages" flex width=100% style="justify-content: center">
 
           <!--   <textarea id="messages" class="form-control" name="chatroom" rows=15 width=100% flex style ="justify-content: center" readonly> -->
 
@@ -171,8 +177,6 @@ Home Page
         </div>
       </form>
 
-
-
     </div>
   </div>
 </div>
@@ -180,14 +184,22 @@ Home Page
 
 
 </div>
+
+
+
+
+
+ <!--
 <div class="row">
 
 </div>
 
 
-<!--
 
 <div class="my-flex-container-column-user">
+
+
+
 
   <div class=" bg-primary">
     <div id="namespace" style="justify-content: center">

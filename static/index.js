@@ -139,25 +139,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   socket.on("channel_deleted", data => {
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
+  //  const queryString = window.location.search;
+  //  const urlParams = new URLSearchParams(queryString);
 
-    if (urlParams.get('channel'))
-      cur_channel = urlParams.get('channel');
+  //  if (urlParams.get('channel'))
+  //    cur_channel = urlParams.get('channel');
 
-    else {
-      cur_channel = urlParams.get('channell');
-    }
+  //  else {
+  //    cur_channel = urlParams.get('channell');
+  //  }
 
-    if (channel == cur_channel){
+  //  if (channel == cur_channel){
 
+//      alert(`cannot delete channel while inside the channel`);
+  //    return false;
+//    }
 
-
-      alert(`cannot delete channel while inside the channel`);
-      return false;
-    }
-    
-    else {
+  //  else {
 
       var list = document.getElementById("channels");
       list.removeChild(list.childNodes[data.channel]);
@@ -165,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('#deleted_channel').value = '';
       //return false;
 
-    }
+//    }
 
 
 
