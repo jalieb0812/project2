@@ -38,11 +38,7 @@ Home Page
     //document.querySelector('#current_channels').disabled = true;
     //};
 
-    return false;
-
-
-
-
+    //  return false;
 
   })
 </script>
@@ -52,7 +48,7 @@ Home Page
   ///prevent user from
   function one() {
 
-    if (document.querySelector('#new_chanel').value.length > 0)
+    if (document.querySelector('#add_channel').value.length > 0)
       document.querySelector('#current_channels').disabled = true;
     else
       document.querySelector('#current_channels').disabled = false;
@@ -69,16 +65,15 @@ Home Page
   <h4 style="color:white">Choose an exisitng channel or create a new channel </h4>
 
 
-
-  <form id="create_channel" action="/channels" method="post">
+  <form id="create_channel" action="channels" method="post">
 
     <p>create a new channel</p>
 
     <div class="form-row">
       <div class="col">
-        <label for="new_channel" class="col-form-label">New channel:</label>
+        <label for="add_channel" class="col-form-label">New channel:</label>
 
-        <input type="text" onkeyup="one()" class="form-control" id="new_channel" name="new_channel">
+        <input type="text" onkeyup="one()" class="form-control" id="add_channel" name="add_channel">
       </div>
 
     </div>

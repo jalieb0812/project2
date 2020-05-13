@@ -6,6 +6,5 @@ eventlet
 gevent-websocket
 gunicorn
 Werkzeug==0.16.0
-itsdangerous==1.1.0
 
 python-socketio

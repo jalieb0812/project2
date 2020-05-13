@@ -42,7 +42,7 @@ socketio = SocketIO(app)
 Session(app)
 
 """username list"""
-users=[]
+users_list=[]
 
 """ channels list """
 channels_list=[]
@@ -73,13 +73,14 @@ def index():
 
 
 
-        return render_template("index.html", username=session["username"],  users=users, channel=session['channel'], channels_list=channels_list, messages_dict=messages_dict, messages_list=messages_list)
+        return render_template("index.html", username=session["username"],  users_list=users_list, channel=session['channel'],
+                                channels_list=channels_list, messages_dict=messages_dict, messages_list=messages_list)
 
 
     if request.method == "POST":
         if request.form.get("add_channel"):
 
-            channel = request.form.get("new_channel")
+            channel = request.form.get("add_channel")
             for channels in channels_list:
                 if channels == channel:
                     flash("channel name already taken. chose another channel name")
@@ -138,20 +139,20 @@ def sign_in():
 
     if request.method=="POST":
 
-        print(f"these are the users {users}")
+        print(f"these are the users {users_list}")
 
         username = str(request.form.get("username"))
 
         print(f"username is {username}")
 
 
-        for name in users:
+        for name in users_list:
             if name == username:
                 return redirect('/sign_in')
 
 
         session['username']= username
-        users.append(username)
+        users_list.append(username)
 
         try:
             session.get(session["channel"])
@@ -183,13 +184,13 @@ def channels():
     if request.method == "POST":
 
 
-        if not request.form.get("new_channel") and not request.form.get("current_channels"):
+        if not request.form.get("add_channel") and not request.form.get("current_channels"):
             flash("Error: you must create a channel or choose a current one")
             return redirect('/channels')
 
-        if request.form.get("new_channel"):
+        if request.form.get("add_channel"):
 
-            channel = request.form.get("new_channel")
+            channel = request.form.get("add_channel")
 
 
 
@@ -237,7 +238,7 @@ def channel(channel):
 
         session['channel']=channel
 
-        return render_template("channel.html", users=users, channels_list=channels_list,
+        return render_template("channel.html", users_list=users_list, channels_list=channels_list,
                             messages_dict=messages_dict, messages_list=messages_list, channel=session['channel'])
 
     else:
@@ -256,7 +257,7 @@ def user_verify():
 
     print(f"this is username in user verify: {username}")
 
-    for name in users:
+    for name in users_list:
         if username == name:
             return jsonify({"validate": False})
 
