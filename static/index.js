@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       document.querySelector('#new_channel').value = '';
-      //return false;
+      //return false;what
 
     };
 
