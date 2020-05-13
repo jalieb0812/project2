@@ -149,10 +149,14 @@ document.addEventListener('DOMContentLoaded', () => {
       cur_channel = urlParams.get('channell');
     }
 
-    if (channel == cur_channel)
+    if (channel == cur_channel){
+
+
 
       alert(`cannot delete channel while inside the channel`);
-
+      return false;
+    }
+    
     else {
 
       var list = document.getElementById("channels");
