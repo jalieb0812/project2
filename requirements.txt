@@ -7,3 +7,4 @@ gevent-websocket
 gunicorn
 Werkzeug==0.16.0
 python-socketio
+gevent
