@@ -24,6 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // When connected, configure form
   socket.on('connect', () => {
+    // 'Enter' key on textarea also sends a message
+    // https://developer.mozilla.org/en-US/docs/Web/Events/keydown
+    document.querySelector('#message').addEventListener("keydown", event => {
+        if (event.key == "Enter") {
+            document.getElementById("messagesubmit").click();
+        }
+    });
 
 
     document.querySelector('#messaging').onsubmit = () => {
@@ -74,6 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   socket.on('send message', data => {
+
+
+
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
