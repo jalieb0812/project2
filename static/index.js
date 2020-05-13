@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Connect to websocket
   const socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
-  //
+  //work u shit
 
   ///code for making channel form not usable unless typing inside.
 
