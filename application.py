@@ -1,4 +1,4 @@
-import os
+import os, re
 import requests
 import datetime
 from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
@@ -14,7 +14,7 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app = Flask(__name__)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['ENV'] = 'development'
+#app.config['ENV'] = 'development'
 
 """
 # Ensure templates are auto-reloaded
