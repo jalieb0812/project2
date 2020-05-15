@@ -21,6 +21,10 @@
   <!--  <script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+  <script src="{{url_for('static', filename = 'channelverify.js')}}"> </script>
+  <script src="{{url_for('static', filename = 'messages_delete.js')}}"> </script>
+
+
 
 
   <!--  <script src="{{url_for('static', filename = 'channels.js')}}"> </script> -->
@@ -463,6 +467,15 @@
   }
 }
 
+@media (max-width: 375px) {
+#message_delete_button_1 {
+
+  display: none;
+
+}
+}
+
+
   #messaging {}
 
   #message {
@@ -557,19 +570,19 @@
         <div class="col p-2">
 
           <div class=" form-row">
-            <form id="addchannel" onsubmit="channel_verify()" method="post" action="{{url_for('index', username=session.username, channel=session['channel'])}}">
+            <form id="addchannel" onsubmit="channel_verify()" method="post" action="{{url_for('index', username=session.username, channel=session.channel)}}" >
               <div class="form-row">
                 <input id="new_channel" class="form-control" name="new_channel" placeholder="addchannel" type="text">
-                <button class="btn btn-primary" id="channelsubmit" onclick="channel_verify()" class="form-control" name="new_channel" type="submit" autocomplete="off" placeholder="addchannel">Add Channel</button>
+                <button class="btn btn-primary" id="channelsubmit" onclick="channel_verify()" class="form-control" name="new_channel" type="submit" autocomplete="off">Add Channel</button>
               </div>
             </form>
 
           </div>
         </div>
 
-        <div class="col p-2">
+        <div class="col-block p-2">
           <div class="form-row">
-            <form id="channel_delete" method="post" action="{{url_for('index', username=session.username, channel=session.channel)}}">
+            <form id="channel_delete" method="post" action="/">
               <div class="form-row">
                 <input type="text" id="deleted_channel" class="form-control" autocomplete="off" placeholder="deletechannel" name="delete_channel">
                 <button class="btn btn-primary" type="submit">Delete Channel</button>
@@ -578,6 +591,19 @@
           </div>
 
         </div>
+
+        <div class="col p-2">
+          <div class="form-row">
+              <div>Delete your messages</div>
+              <div class="form-row">
+                <button id="message_delete_button_1" class="btn btn-primary" onclick="del_messages()"type="submit">Delete your messages</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+
       </div>
 
 

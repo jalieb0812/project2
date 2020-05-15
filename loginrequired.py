@@ -13,7 +13,7 @@ def login_required(f):
     """
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get("username") is None:
+        if session.get("username") is None or session.get("channel") is None:
             return redirect("/sign_in")
         return f(*args, **kwargs)
     return decorated_function

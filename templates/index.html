@@ -67,9 +67,12 @@ Home Page
 
           <div id="channels">
               <div class="p-2 my-flex-item-channel  " id="channel_check"> </div>
+              <div id="delete_message_button">
+                <button id="message_delete_button" class="btn btn-primary" onclick="del_messages()"type="submit">Delete your messages</button>
+              </div>
             {% for channel in channels_list %}
 
-            <a href="{{ url_for('channel', channel=channel,  channell=channel, username=session.username )}} " width=100% data-channel={{channel}} class="the_channels" id="channel" data-page="messages">
+            <a href="{{ url_for('index', channel=channel, username=session.username )}} " width=100% data-channel={{channel}} class="the_channels" id="channel" data-page="messages">
               channel: {{ channel }}
             </a>
 
@@ -156,7 +159,7 @@ Home Page
           <!--   <textarea id="messages" class="form-control" name="chatroom" rows=15 width=100% flex style ="justify-content: center" readonly> -->
 
           {% for message in messages_dict[session.channel] %}
-          <div> {{message}} </div>
+          <div class="message_text_{{session.username}}">{{message}}</div>
           {% endfor %}
 
           <!--  </textarea> -->
@@ -223,41 +226,7 @@ Home Page
 </div>
 
 <script type="text/javascript">
-  function channel_verify() {
 
-    document.querySelector('#addchannel').onsubmit = () => {
-
-      const request = new XMLHttpRequest();
-
-      const channel = document.querySelector("#new_channel").value;
-
-      request.open('POST', '/channel_verify', true);
-
-      request.onload = () => {
-
-        const data = JSON.parse(request.responseText);
-
-        if (data.validate == false) {
-          //location.reload(true);
-          window.alert(`channel name ${channel} already exists, choose a new channel name`);
-          return false;
-        } else {
-          alert(`channel ${channel} created`)
-          //return false;
-          //location.reload(true)
-
-        }
-
-      }
-
-      const data = new FormData();
-      data.append('new_channel', channel)
-      request.send(data);
-      //  return false;
-
-
-    };
-  };
 </script>
 
 

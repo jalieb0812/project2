@@ -12,7 +12,7 @@
   <h1 id="sign_in_welcome">Welcome to JOSlack</h1>
 
   <label for="username"> Enter your username</label>
-  <form id="add_user" onsubmit="user_verify()" action="/sign_in" method="post">
+  <form id="add_user" action="/sign_in" method="post">
     <div class="form-group">
       <input id="username" autocomplete="off" autofocus class="form-log" name="username" placeholder="Username" type="text">
     </div>
@@ -40,9 +40,6 @@
 
     document.querySelector('#user_submit').disabled = true;
     document.querySelector('#username').onkeyup = () => {
-
-
-
 
 
       if (document.querySelector('#username').value.length > 0)
@@ -79,6 +76,12 @@
           return false;
         } else {
 
+          const user = username
+
+          //set the users name in memory
+          localStorage.setItem('user', user);
+
+
           alert(`username ${username} created`)
         }
 
@@ -91,11 +94,9 @@
       //  document.querySelector('#username').value = '';
 
 
-
       //console.log(JSON.parse(request.responseText))
 
       //  const channel = document.querySelector("#new_channel").value;
-
 
     };
   };

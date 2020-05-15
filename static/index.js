@@ -21,6 +21,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   };
 
+  //code for ensuring channels cant have the same name
+  function channel_verify() {
+    document.querySelector('#addchannel').onsubmit = () => {
+
+      const request = new XMLHttpRequest();
+
+      const channel = document.querySelector("#new_channel").value;
+
+      request.open('POST', '/channel_verify', true);
+
+      request.onload = () => {
+
+        const data = JSON.parse(request.responseText);
+
+        if (data.validate == false) {
+          //location.reload(true);
+          window.alert(`channel name ${channel} already exists, choose a new channel name`);
+          return false;
+        } else {
+          alert(`channel ${channel} created; entering channel: ${channel}`)
+          //return false;
+          //location.reload(true)
+
+        }
+
+      }
+
+      const data = new FormData();
+      data.append('new_channel', channel)
+      request.send(data);
+      //  return false;
+
+
+    };
+  };
+
+
 
   // When connected, configure form
   socket.on('connect', () => {
@@ -60,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       document.querySelector('#new_channel').value = '';
-      //return false;what
+      return false;
 
     };
 
@@ -72,9 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       document.querySelector('#deleted_channel').value = '';
-      // return false;
+      //return channel_verify();
 
     };
+
+
+
+  ///  document.querySelector('#message_delete_button').onclick = () =>{
+  ///    const username=localStorage.getItem("user")
+  ///    socket.emit("delete_messages", {'username': username})
+    ///}
 
 
   });
@@ -103,6 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
       div.innerHTML = `${data.timestamp}: ${data.username}:  ${data.message} `;
+
+      div.setAttribute('class', `message_text_${data.username}`);
 
       //  const row = `${data.timestamp}: ${data.username}:  ${data.message}`;
 
@@ -139,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //relock channel submit
     document.querySelector('#new_channel').value = '';
     document.querySelector('#channelsubmit').disabled = true;
-    return false;
+    //return false;
 
     //  document.querySelector('#channels').append(li) ;
 
