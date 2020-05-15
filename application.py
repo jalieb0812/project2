@@ -328,6 +328,8 @@ def delete_channel(data):
             if item == channel:
                 channels_list.remove(item)
 
+        """ add delete the messages from the actual channel"""
+
         emit("channel_deleted", {'channel': channel}, broadcast=True)
 
     #return jsonify({'success': True})
@@ -424,6 +426,12 @@ def logout():
     """Log user out"""
 
     # Forget any user_id
+
+    """delete username from user_name list)"""
+
+    users_list.remove(session['username'])
+
+
     session.clear()
 
     # Redirect user to login form
