@@ -302,19 +302,81 @@ def delete_channel(data):
 
     #return jsonify({'success': True})
 
-""" route for deleting your messages
+""" route for deleting your messages"""
 @socketio.on("delete_messages")
-def delete_channel(data):
+def delete_messages(data):
 
-    username=session['username']
-    channel=session['channel']
+    username=data["username"]
+    channel=data['channel']
 
-    for messages in messagesdict['channel']:
+    counter=0
+    counter2=0
+
+    #while(counter < len(messages_dict[channel])):
+
+    for message in messages_dict[channel]:
+
+        if (f"{username}:") in message:
+            print(f"{message}")
+            messages_dict[channel].remove(message)
+
+            counter += 1
+
+            print(f"counter is {counter}: \n" )
+
+    for message in messages_dict[channel]:
+
+        if (f"{username}:") in message:
+            print(f"{message}")
+            messages_dict[channel].remove(message)
+
+            counter2 += 1
+
+            print(f"counter2 is {counter2}: \n" )
 
 
-    emit("messages_deleted")
 
-"""
+
+
+    counter3=0
+
+    for message in messages_dict[channel]:
+
+        if (f"{username}:") in message:
+            print(f"{message}")
+            messages_dict[channel].remove(message)
+            counter3 += 1
+
+            print(f"counter3 is {counter3}: " )
+
+        counter4=0
+
+        for message in messages_dict[channel]:
+
+            if (f"{username}:") in message:
+                print(f"{message}")
+                messages_dict[channel].remove(message)
+                counter4 += 1
+
+                print(f"counter4 is {counter4}: " )
+
+            counter5=0
+
+    for message in messages_dict[channel]:
+
+        if (f"{username}:") in message:
+            print(f"{message}")
+            messages_dict[channel].remove(message)
+            counter5 += 1
+
+            print(f"counter5 is {counter5}: " )
+
+
+
+
+    emit("messages_deleted", {'username': username, 'channel': channel},  broadcast=True)
+
+
 
 @socketio.on("submit message")
 def message(data):
@@ -340,7 +402,7 @@ def message(data):
     #if messages list has over 100 messages remove message index 0; Note: just to keep this smaller for debuging
 
     if len(messages_list) > 100:
-        messages_list.pop([0])
+        messages_list.pop(0)
 
     print(f"this is messages_list in submit message after append:  {messages_list}: \n")
 

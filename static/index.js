@@ -115,13 +115,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  ///  document.querySelector('#message_delete_button').onclick = () =>{
-  ///    const username=localStorage.getItem("user")
-  ///    socket.emit("delete_messages", {'username': username})
+   document.querySelector('#message_delete_button').onclick = () =>{
+     const username=localStorage.getItem("user");
+     const queryString = window.location.search;
+     const urlParams = new URLSearchParams(queryString);
+     channel = urlParams.get('channel');
+
+     socket.emit("delete_messages", {'username': username, 'channel': channel})
     ///}
 
 
-  });
+  };
 
 
   socket.on('send message', data => {
@@ -137,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     else {
-      channel = urlParams.get('channell');
+      channel = localStorage.getItem('current_channel');
     }
 
 
@@ -195,23 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   socket.on("channel_deleted", data => {
 
-  //  const queryString = window.location.search;
-  //  const urlParams = new URLSearchParams(queryString);
 
-  //  if (urlParams.get('channel'))
-  //    cur_channel = urlParams.get('channel');
-
-  //  else {
-  //    cur_channel = urlParams.get('channell');
-  //  }
-
-  //  if (channel == cur_channel){
-
-//      alert(`cannot delete channel while inside the channel`);
-  //    return false;
-//    }
-
-  //  else {
 
       var list = document.getElementById("channels");
       list.removeChild(list.childNodes[data.channel]);
@@ -227,5 +215,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   });
 
+
+    socket.on("messages_deleted", data => {
+
+      const messages = document.querySelectorAll(`.message_text_${data.username}`);
+      for (var i = 0; i < messages.length; i++) {
+
+        console.log('message: ', messages[i]);
+
+        messages[i].remove();
+
+      }
+
+      alert(`${data.username} deleted their messages in channel ${data.channel}`);
+
+
+
+    });
+
+
+});
 
 });

@@ -32,17 +32,15 @@ Home Page
 
   document.addEventListener('DOMContentLoaded', () => {
 
-    if ('{{session['channel ']}}')
-
+    //clear last user
+    localStorage.setItem('current_channel', '')
       localStorage.setItem('current_channel', '{{session['channel']}}')
       let cur_channel = localStorage.getItem('current_channel');
        document.querySelector('#channel_check').innerHTML = `Current channel: ${cur_channel}`;
        //return false;
 
 
-  });
-
-  //     }
+     })
 </script>
 
 <div class="container-flex flex-wrap">
