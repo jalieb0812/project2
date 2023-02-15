@@ -5,7 +5,7 @@ requests
 eventlet
 gevent-websocket
 gunicorn
-Werkzeug==0.16.0
+Werkzeug==2.2.3
 python-socketio
 gevent
 psycopg2
